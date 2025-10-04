@@ -57,13 +57,13 @@ Below is a mapping from default supported types to their respective class names 
 
 ## Reference Implementations
 
-Three reference feature implementations are included for common cases. They are defined in the table below.
+Three reference feature implementations are included in the `SabreTools.CommandLine.Features` namespace. They are defined in the table below.
 
 | Class | Description |
 | --- | --- |
-| `DefaultHelp` | Outputs either a generic help text or one specific to a feature name included as the second argument |
-| `DefaultHelpExtended` | Outputs either a generic help text with extended descriptions or one specific to a feature name included as the second argument |
-| `DefaultVersion` | Outputs the version number of the program, derived from the informational version |
+| `Help` | Outputs either a generic help text or one specific to a feature name included as the second argument |
+| `HelpExtended` | Outputs either a generic help text with extended descriptions or one specific to a feature name included as the second argument |
+| `Version` | Outputs the version number of the program, derived from the informational version |
 
 ## Releases
 
