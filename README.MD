@@ -64,3 +64,9 @@ Three reference feature implementations are included for common cases. They are 
 | `DefaultHelp` | Outputs either a generic help text or one specific to a feature name included as the second argument |
 | `DefaultHelpExtended` | Outputs either a generic help text with extended descriptions or one specific to a feature name included as the second argument |
 | `DefaultVersion` | Outputs the version number of the program, derived from the informational version |
+
+## Releases
+
+For the most recent stable build, download the latest release here: [Releases Page](https://github.com/SabreTools/SabreTools.CommandLine/releases)
+
+For the latest WIP build here: [Rolling Release](https://github.com/SabreTools/SabreTools.CommandLine/releases/rolling)
