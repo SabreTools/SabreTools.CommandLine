@@ -6,7 +6,7 @@ This library contains logic to both parse commandlines using typed inputs as wel
 
 All inputs allow for non-flag inputs in both `a=b` and `a b` formats. This allows for greater flexibility for cross-platform support. Flags for each input are fully defined by the implementer, so inputs of the form `-a`, `--a`, `/a`, and `a` are all accepted and can even be mixed. The only restriction is that flags should not end with the `=` character as it may interfere with default parsing.
 
-For an example of a program implementing the library, see [SabreTools](https://github.com/SabreTools/SabreTools).
+For an example of a program implementing the library as well as the original source of this library code, see [SabreTools](https://github.com/SabreTools/SabreTools).
 
 ## Special Types
 
