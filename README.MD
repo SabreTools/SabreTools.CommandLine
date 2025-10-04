@@ -1,5 +1,7 @@
 # SabreTools.CommandLine
 
+[![Build and Test](https://github.com/SabreTools/SabreTools.CommandLine/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/SabreTools/SabreTools.CommandLine/actions/workflows/build_and_test.yml)
+
 This library contains logic to both parse commandlines using typed inputs as well as format and output help text. Formatting and output is context-aware, allowing for different behavior if console outputs are redirected.
 
 All inputs allow for non-flag inputs in both `a=b` and `a b` formats. This allows for greater flexibility for cross-platform support. Flags for each input are fully defined by the implementer, so inputs of the form `-a`, `--a`, `/a`, and `a` are all accepted and can even be mixed. The only restriction is that flags should not end with the `=` character as it may interfere with default parsing.
