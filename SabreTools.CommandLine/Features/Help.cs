@@ -36,7 +36,7 @@
             // If we had something else after help
             if (args.Length > 1)
             {
-                parentSet?.OutputIndividualFeature(args[1]);
+                parentSet?.OutputFeatureHelp(args[1]);
                 return true;
             }
 

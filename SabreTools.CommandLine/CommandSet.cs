@@ -202,7 +202,7 @@ namespace SabreTools.CommandLine
         /// </summary>
         /// <param name="featureName">Name of the feature to output information for, if possible</param>
         /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
-        public void OutputIndividualFeature(string? featureName, bool includeLongDescription = false)
+        public void OutputFeatureHelp(string? featureName, bool includeLongDescription = false)
         {
             // Start building the output list
             List<string> output = [];
