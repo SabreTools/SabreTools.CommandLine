@@ -12,14 +12,20 @@ namespace SabreTools.CommandLine.Inputs
         #region Properties
 
         /// <summary>
-        /// Display name for the feature
+        /// Reference name for the input
         /// </summary>
-        public string Name { get; protected set; }
+        /// <remarks>This value should be unique across user inputs</remarks>
+        public string Name { get; }
 
         /// <summary>
-        /// Set of children associated with this input
+        /// Short description of the input
         /// </summary>
-        public readonly Dictionary<string, UserInput> Children = [];
+        public string Description { get; }
+
+        /// <summary>
+        /// Optional detailed description of the input
+        /// </summary>
+        private string? LongDescription { get; }
 
         #endregion
 
@@ -31,14 +37,9 @@ namespace SabreTools.CommandLine.Inputs
         protected readonly List<string> Flags = [];
 
         /// <summary>
-        /// Short description of the feature
+        /// Set of children associated with this input
         /// </summary>
-        private readonly string _description;
-
-        /// <summary>
-        /// Optional long description of the feature
-        /// </summary>
-        private readonly string? _longDescription;
+        protected readonly Dictionary<string, UserInput> Children = [];
 
         #endregion
 
@@ -48,16 +49,16 @@ namespace SabreTools.CommandLine.Inputs
         {
             Name = name;
             Flags.Add(flag);
-            _description = description;
-            _longDescription = longDescription;
+            Description = description;
+            LongDescription = longDescription;
         }
 
         public UserInput(string name, string[] flags, string description, string? longDescription = null)
         {
             Name = name;
             Flags.AddRange(flags);
-            _description = description;
-            _longDescription = longDescription;
+            Description = description;
+            LongDescription = longDescription;
         }
 
         #endregion
@@ -704,7 +705,7 @@ namespace SabreTools.CommandLine.Inputs
             output.Append(CreatePadding(pre));
             output.Append(FormatFlags());
             output.Append(CreatePadding(midpointPadding));
-            output.Append(_description);
+            output.Append(Description);
 
             return output.ToString();
         }
@@ -717,11 +718,11 @@ namespace SabreTools.CommandLine.Inputs
         internal List<string> FormatLongDescription(int pre)
         {
             // If the long description is null or empty
-            if (string.IsNullOrEmpty(_longDescription))
+            if (string.IsNullOrEmpty(LongDescription))
                 return [];
 
             // Normalize the description for output
-            string longDescription = _longDescription!.Replace("\r\n", "\n");
+            string longDescription = LongDescription!.Replace("\r\n", "\n");
             longDescription = longDescription.Replace("\n", "\n ");
 
             // Get the width of the console for wrapping reference
