@@ -20,11 +20,13 @@ namespace SabreTools.CommandLine.Inputs
         /// <summary>
         /// Short description of the input
         /// </summary>
+        /// <remarks>Should be a single printable line</remarks>
         public string Description { get; }
 
         /// <summary>
         /// Optional detailed description of the input
         /// </summary>
+        /// <remarks>Can include newlines and additional formatting</remarks>
         private string? LongDescription { get; }
 
         #endregion
