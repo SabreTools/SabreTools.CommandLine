@@ -11,16 +11,16 @@
 
         private const string _description = "Show this help";
 
-        private const string _longDescription = "Built-in to most of the programs is a basic help text.";
+        private const string _detailedDescription = "Built-in to most of the programs is a basic help text.";
 
         public Help()
-            : base(DisplayName, _defaultFlags, _description, _longDescription)
+            : base(DisplayName, _defaultFlags, _description, _detailedDescription)
         {
             RequiresInputs = false;
         }
 
         public Help(string[] flags)
-            : base(DisplayName, flags, _description, _longDescription)
+            : base(DisplayName, flags, _description, _detailedDescription)
         {
             RequiresInputs = false;
         }

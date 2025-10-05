@@ -9,14 +9,14 @@ namespace SabreTools.CommandLine.Inputs
     {
         #region Constructors
 
-        public Int8Input(string name, string flag, string description, string? longDescription = null)
-            : base(name, flag, description, longDescription)
+        public Int8Input(string name, string flag, string description, string? detailedDescription = null)
+            : base(name, flag, description, detailedDescription)
         {
             Value = null;
         }
 
-        public Int8Input(string name, string[] flags, string description, string? longDescription = null)
-            : base(name, flags, description, longDescription)
+        public Int8Input(string name, string[] flags, string description, string? detailedDescription = null)
+            : base(name, flags, description, detailedDescription)
         {
             Value = null;
         }

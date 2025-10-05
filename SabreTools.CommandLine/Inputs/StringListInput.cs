@@ -10,14 +10,14 @@ namespace SabreTools.CommandLine.Inputs
     {
         #region Constructors
 
-        public StringListInput(string name, string flag, string description, string? longDescription = null)
-            : base(name, flag, description, longDescription)
+        public StringListInput(string name, string flag, string description, string? detailedDescription = null)
+            : base(name, flag, description, detailedDescription)
         {
             Value = null;
         }
 
-        public StringListInput(string name, string[] flags, string description, string? longDescription = null)
-            : base(name, flags, description, longDescription)
+        public StringListInput(string name, string[] flags, string description, string? detailedDescription = null)
+            : base(name, flags, description, detailedDescription)
         {
             Value = null;
         }

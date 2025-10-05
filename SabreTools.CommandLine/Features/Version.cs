@@ -14,16 +14,16 @@ namespace SabreTools.CommandLine.Features
 
         private const string _description = "Prints version";
 
-        private const string _longDescription = "Prints current program version.";
+        private const string _detailedDescription = "Prints current program version.";
 
         public Version()
-            : base(DisplayName, _defaultFlags, _description, _longDescription)
+            : base(DisplayName, _defaultFlags, _description, _detailedDescription)
         {
             RequiresInputs = false;
         }
 
         public Version(string[] flags)
-            : base(DisplayName, flags, _description, _longDescription)
+            : base(DisplayName, flags, _description, _detailedDescription)
         {
             RequiresInputs = false;
         }

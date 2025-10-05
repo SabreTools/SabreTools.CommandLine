@@ -12,13 +12,13 @@ namespace SabreTools.CommandLine.Inputs
 
         #region Constructors
 
-        public UserInput(string name, string flag, string description, string? longDescription = null)
-            : base(name, flag, description, longDescription)
+        public UserInput(string name, string flag, string description, string? detailedDescription = null)
+            : base(name, flag, description, detailedDescription)
         {
         }
 
-        public UserInput(string name, string[] flags, string description, string? longDescription = null)
-            : base(name, flags, description, longDescription)
+        public UserInput(string name, string[] flags, string description, string? detailedDescription = null)
+            : base(name, flags, description, detailedDescription)
         {
         }
 

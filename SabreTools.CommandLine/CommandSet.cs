@@ -222,7 +222,7 @@ namespace SabreTools.CommandLine
         /// Output a single feature recursively
         /// </summary>
         /// <param name="featureName">Name of the feature to output information for, if possible</param>
-        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
+        /// <param name="detailed">True if the detailed description should be formatted and output, false otherwise</param>
         public void OutputFeatureHelp(string? featureName, bool detailed = false)
         {
             // If the feature name is null, empty, or just consisting of leading characters

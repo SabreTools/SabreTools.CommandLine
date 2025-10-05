@@ -11,16 +11,16 @@
 
         private const string _description = "Show this detailed help";
 
-        private const string _longDescription = "Display a detailed help text to the screen.";
+        private const string _detailedDescription = "Display a detailed help text to the screen.";
 
         public HelpExtended()
-            : base(DisplayName, _defaultFlags, _description, _longDescription)
+            : base(DisplayName, _defaultFlags, _description, _detailedDescription)
         {
             RequiresInputs = false;
         }
 
         public HelpExtended(string[] flags)
-            : base(DisplayName, flags, _description, _longDescription)
+            : base(DisplayName, flags, _description, _detailedDescription)
         {
             RequiresInputs = false;
         }

@@ -9,14 +9,14 @@ namespace SabreTools.CommandLine.Inputs
     {
         #region Constructors
 
-        public FlagInput(string name, string flag, string description, string? longDescription = null)
-            : base(name, flag, description, longDescription)
+        public FlagInput(string name, string flag, string description, string? detailedDescription = null)
+            : base(name, flag, description, detailedDescription)
         {
             Value = false;
         }
 
-        public FlagInput(string name, string[] flags, string description, string? longDescription = null)
-            : base(name, flags, description, longDescription)
+        public FlagInput(string name, string[] flags, string description, string? detailedDescription = null)
+            : base(name, flags, description, detailedDescription)
         {
             Value = false;
         }

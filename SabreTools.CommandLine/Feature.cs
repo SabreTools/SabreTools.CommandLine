@@ -24,13 +24,13 @@ namespace SabreTools.CommandLine
 
         #region Constructors
 
-        public Feature(string name, string flag, string description, string? longDescription = null)
-            : base(name, flag, description, longDescription)
+        public Feature(string name, string flag, string description, string? detailedDescription = null)
+            : base(name, flag, description, detailedDescription)
         {
         }
 
-        public Feature(string name, string[] flags, string description, string? longDescription = null)
-            : base(name, flags, description, longDescription)
+        public Feature(string name, string[] flags, string description, string? detailedDescription = null)
+            : base(name, flags, description, detailedDescription)
         {
         }
 

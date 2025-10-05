@@ -113,10 +113,10 @@ namespace SabreTools.CommandLine.Test
         [InlineData("Some long description\n    - With formatting", 3)]
         [InlineData("Some long description\r\n    - With formatting", 3)]
         [InlineData("Some long description  with multiple spaces", 2)]
-        public void FormatLongDescriptionTest(string longDescription, int expectedCount)
+        public void FormatDetailedDescriptionTest(string detailedDescription, int expectedCount)
         {
-            var feature = new MockFeature("a", "a", "a", longDescription);
-            var formatted = feature.FormatLongDescription(pre: 0);
+            var feature = new MockFeature("a", "a", "a", detailedDescription);
+            var formatted = feature.FormatDetailedDescription(pre: 0);
             Assert.Equal(expectedCount, formatted.Count);
         }
 
@@ -125,13 +125,13 @@ namespace SabreTools.CommandLine.Test
         /// </summary>
         private class MockFeature : Feature
         {
-            public MockFeature(string name, string flag, string description, string? longDescription = null)
-                : base(name, flag, description, longDescription)
+            public MockFeature(string name, string flag, string description, string? detailedDescription = null)
+                : base(name, flag, description, detailedDescription)
             {
             }
 
-            public MockFeature(string name, string[] flags, string description, string? longDescription = null)
-                : base(name, flags, description, longDescription)
+            public MockFeature(string name, string[] flags, string description, string? detailedDescription = null)
+                : base(name, flags, description, detailedDescription)
             {
             }
 
