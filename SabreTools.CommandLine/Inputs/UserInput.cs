@@ -615,19 +615,19 @@ namespace SabreTools.CommandLine.Inputs
         /// <summary>
         /// Create formatted help text
         /// </summary>
-        /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
+        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
         /// <returns>Help text formatted as a list of strings</returns>
-        public List<string> Format(bool includeLongDescription = false)
-            => Format(pre: 0, midpoint: 0, includeLongDescription);
+        public List<string> Format(bool detailed = false)
+            => Format(pre: 0, midpoint: 0, detailed);
 
         /// <summary>
         /// Create formatted help text
         /// </summary>
         /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
-        /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
+        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
         /// <returns>Help text formatted as a list of strings</returns>
-        public List<string> Format(int pre, int midpoint, bool includeLongDescription = false)
+        public List<string> Format(int pre, int midpoint, bool detailed = false)
         {
             // Create the output list
             List<string> outputList = [];
@@ -636,7 +636,7 @@ namespace SabreTools.CommandLine.Inputs
             outputList.Add(FormatStandard(pre, midpoint));
 
             // Add the long description, if needed
-            if (includeLongDescription)
+            if (detailed)
                 outputList.AddRange(FormatLongDescription(pre, midpoint));
 
             return outputList;
@@ -645,20 +645,20 @@ namespace SabreTools.CommandLine.Inputs
         /// <summary>
         /// Create formatted help text including all children
         /// </summary>
-        /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
+        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
         /// <returns>Help text formatted as a list of strings</returns>
-        public List<string> FormatRecursive(bool includeLongDescription = false)
-            => FormatRecursive(tabLevel: 0, pre: 0, midpoint: 0, includeLongDescription);
+        public List<string> FormatRecursive(bool detailed = false)
+            => FormatRecursive(tabLevel: 0, pre: 0, midpoint: 0, detailed);
 
         /// <summary>
         /// Create formatted help text including all children
         /// </summary>
         /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
-        /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
+        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
         /// <returns>Help text formatted as a list of strings</returns>
-        public List<string> FormatRecursive(int pre, int midpoint, bool includeLongDescription = false)
-            => FormatRecursive(tabLevel: 0, pre, midpoint, includeLongDescription);
+        public List<string> FormatRecursive(int pre, int midpoint, bool detailed = false)
+            => FormatRecursive(tabLevel: 0, pre, midpoint, detailed);
 
         /// <summary>
         /// Pre-format the flags for output
@@ -785,9 +785,9 @@ namespace SabreTools.CommandLine.Inputs
         /// <param name="tabLevel">Level of indentation for this feature</param>
         /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
-        /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
+        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
         /// <returns>Help text formatted as a list of strings</returns>
-        private List<string> FormatRecursive(int tabLevel, int pre = 0, int midpoint = 0, bool includeLongDescription = false)
+        private List<string> FormatRecursive(int tabLevel, int pre = 0, int midpoint = 0, bool detailed = false)
         {
             // Create the output list
             List<string> outputList = [];
@@ -805,13 +805,13 @@ namespace SabreTools.CommandLine.Inputs
             outputList.Add(FormatStandard(preAdjusted, midpointAdjusted));
 
             // Add the long description, if needed
-            if (includeLongDescription)
+            if (detailed)
                 outputList.AddRange(FormatLongDescription(preAdjusted, midpointAdjusted));
 
             // Append all children recursively
             foreach (var feature in Children.Values)
             {
-                outputList.AddRange(feature.FormatRecursive(tabLevel + 1, pre, midpoint, includeLongDescription));
+                outputList.AddRange(feature.FormatRecursive(tabLevel + 1, pre, midpoint, detailed));
             }
 
             return outputList;

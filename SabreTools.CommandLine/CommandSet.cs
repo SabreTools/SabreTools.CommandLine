@@ -184,7 +184,7 @@ namespace SabreTools.CommandLine
             output.Add("Available options:");
             foreach (var input in _inputs.Values)
             {
-                var outputs = input.FormatRecursive(pre: 2, midpoint: 30, includeLongDescription: true);
+                var outputs = input.FormatRecursive(pre: 2, midpoint: 30, detailed: true);
                 if (outputs != null)
                     output.AddRange(outputs);
             }
@@ -201,8 +201,8 @@ namespace SabreTools.CommandLine
         /// Output a single feature recursively
         /// </summary>
         /// <param name="featureName">Name of the feature to output information for, if possible</param>
-        /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
-        public void OutputFeatureHelp(string? featureName, bool includeLongDescription = false)
+        /// <param name="detailed">True if the long description should be formatted and output, false otherwise</param>
+        public void OutputFeatureHelp(string? featureName, bool detailed = false)
         {
             // If the feature name is null, empty, or just consisting of leading characters
             string trimmedName = featureName?.TrimStart('-', '/', '\\') ?? string.Empty;
@@ -222,7 +222,7 @@ namespace SabreTools.CommandLine
                 // Append the formatted text
                 List<string> output = [];
                 output.Add($"Available options for {featureName}:");
-                output.AddRange(input.FormatRecursive(pre: 2, midpoint: 30, includeLongDescription));
+                output.AddRange(input.FormatRecursive(pre: 2, midpoint: 30, detailed));
 
                 // Now write out everything in a staged manner
                 WriteOutWithPauses(output);
@@ -243,7 +243,7 @@ namespace SabreTools.CommandLine
                 output.Add($"\"{featureName}\" not found. Did you mean:");
                 foreach (string possible in startsWith)
                 {
-                    output.AddRange(_inputs[possible].Format(pre: 2, midpoint: 30, includeLongDescription));
+                    output.AddRange(_inputs[possible].Format(pre: 2, midpoint: 30, detailed));
                 }
 
                 // Now write out everything in a staged manner
