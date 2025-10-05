@@ -74,10 +74,10 @@ namespace SabreTools.CommandLine
         {
             get
             {
-                if (!_inputs.ContainsKey(name))
+                if (!_inputs.TryGetValue(name, out var input))
                     return null;
 
-                return _inputs[name];
+                return input;
             }
         }
 
@@ -85,10 +85,10 @@ namespace SabreTools.CommandLine
         {
             get
             {
-                if (!_inputs.ContainsKey(subfeature.Name))
+                if (!_inputs.TryGetValue(subfeature.Name, out var input))
                     return null;
 
-                return _inputs[subfeature.Name];
+                return input;
             }
         }
 
