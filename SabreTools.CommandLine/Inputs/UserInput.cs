@@ -649,7 +649,7 @@ namespace SabreTools.CommandLine.Inputs
 
             // Add the long description, if needed
             if (detailed)
-                outputList.AddRange(FormatLongDescription(pre));
+                outputList.AddRange(FormatLongDescription(pre + 4));
 
             return outputList;
         }
@@ -689,7 +689,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <summary>
         /// Format the standard help output line
         /// </summary>
-        /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
+        /// <param name="pre">Positive number representing number of spaces to put in front of the line</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
         /// <returns>Formatted output string</returns>
         internal string FormatStandard(int pre, int midpoint)
@@ -712,7 +712,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <summary>
         /// Format the long description help output lines
         /// </summary>
-        /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
+        /// <param name="pre">Positive number representing number of spaces to put in front of the lines</param>
         /// <returns>Pre-split output lines</returns>
         internal List<string> FormatLongDescription(int pre)
         {
@@ -730,7 +730,7 @@ namespace SabreTools.CommandLine.Inputs
             // Prepare the outputs
             List<string> outputList = [];
             var output = new StringBuilder();
-            output.Append(CreatePadding(pre + 4));
+            output.Append(CreatePadding(pre));
 
             // Now split the input description and start processing
             string[]? split = longDescription.Split(' ');
@@ -757,7 +757,7 @@ namespace SabreTools.CommandLine.Inputs
                 // Add the next word only if the total length doesn't go above the width of the screen
                 if (output.Length + segment.Length < width)
                 {
-                    output.Append(output.Length == pre + 4 ? string.Empty : " ");
+                    output.Append(output.Length == pre ? string.Empty : " ");
                     output.Append(segment);
                 }
                 // Otherwise, we want to cache the line to output and create a new blank string
@@ -769,7 +769,7 @@ namespace SabreTools.CommandLine.Inputs
 #else
                     output.Clear();
 #endif
-                    output.Append(CreatePadding(pre + 4));
+                    output.Append(CreatePadding(pre));
                     output.Append(segment);
                 }
 
@@ -782,7 +782,7 @@ namespace SabreTools.CommandLine.Inputs
 #else
                     output.Clear();
 #endif
-                    output.Append(CreatePadding(pre + 4));
+                    output.Append(CreatePadding(pre));
                 }
             }
 
@@ -820,7 +820,7 @@ namespace SabreTools.CommandLine.Inputs
 
             // Add the long description, if needed
             if (detailed)
-                outputList.AddRange(FormatLongDescription(preAdjusted));
+                outputList.AddRange(FormatLongDescription(preAdjusted + 4));
 
             // Append all children recursively
             foreach (var feature in Children.Values)
