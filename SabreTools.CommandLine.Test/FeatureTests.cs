@@ -109,6 +109,7 @@ namespace SabreTools.CommandLine.Test
         [InlineData("Some long description\nwith a newline", 3)]
         [InlineData("Some long description\nwith\nmultiple\nnewlines", 5)]
         [InlineData("Some long description\n    - With formatting", 3)]
+        [InlineData("Some long description  with multiple spaces", 2)]
         public void FormatLongDescriptionTest(string longDescription, int expectedCount)
         {
             var feature = new MockFeature("a", "a", "a", longDescription);

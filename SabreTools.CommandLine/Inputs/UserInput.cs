@@ -710,7 +710,7 @@ namespace SabreTools.CommandLine.Inputs
 
             // Normalize the description for output
             string longDescription = _longDescription!.Replace("\r\n", "\n");
-            longDescription = longDescription.Replace("\n", "\n" + CreatePadding(pre + 4));
+            longDescription = longDescription.Replace("\n", "\n ");
 
             // Get the width of the console for wrapping reference
             int width = (Console.WindowWidth == 0 ? 80 : Console.WindowWidth) - 1;
@@ -727,7 +727,14 @@ namespace SabreTools.CommandLine.Inputs
                 // Cache the current segment
                 string segment = split[i];
 
-                // If we have a newline character, reset the line and continue
+                // If the segment is empty
+                if (segment.Length == 0)
+                {
+                    output.Append(" ");
+                    continue;
+                }
+
+                // If the line ends with a newline
                 bool forceSplit = false;
                 if (segment.EndsWith("\n"))
                 {
