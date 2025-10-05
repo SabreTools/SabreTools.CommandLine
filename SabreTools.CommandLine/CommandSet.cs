@@ -128,6 +128,25 @@ namespace SabreTools.CommandLine
         }
 
         /// <summary>
+        /// Gets the top-level user input associated with a given name or flag
+        /// </summary>
+        /// <param name="value">Name or flag value to match</param>
+        /// <returns>User input associated with the name or flag, if possible</returns>
+        public UserInput? GetTopLevel(string value)
+        {
+            // Validate the value matches something
+            string inputName = GetInputName(value);
+            if (inputName.Length == 0)
+                return null;
+
+            // Try to get the child based on the name
+            if (!_inputs.TryGetValue(inputName, out var input))
+                return null;
+
+            return input;
+        }
+
+        /// <summary>
         /// Check if a flag is a top-level (main application) flag
         /// </summary>
         /// <param name="flag">Name of the flag to check</param>

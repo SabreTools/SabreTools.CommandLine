@@ -50,6 +50,28 @@ namespace SabreTools.CommandLine.Test
         }
 
         [Fact]
+        public void GetTopLevelTest()
+        {
+            var input1 = new FlagInput("input1", "--input1", "input1");
+            var input2 = new FlagInput("input2", "--input2", "input2");
+
+            var featureSet = new CommandSet();
+            featureSet.Add(input1);
+            featureSet.Add(input2);
+
+            var actualInput1 = featureSet.GetTopLevel("input1");
+            Assert.NotNull(actualInput1);
+            Assert.Equal("input1", actualInput1.Name);
+
+            var actualInput2 = featureSet.GetTopLevel("--input2");
+            Assert.NotNull(actualInput2);
+            Assert.Equal("input2", actualInput2.Name);
+
+            var actualInput3 = featureSet.GetTopLevel("input3");
+            Assert.Null(actualInput3);
+        }
+
+        [Fact]
         public void TopLevelFlagTest()
         {
             var input1 = new FlagInput("input1", "--input1", "input1");
