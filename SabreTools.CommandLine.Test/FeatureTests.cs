@@ -107,8 +107,11 @@ namespace SabreTools.CommandLine.Test
         [Theory]
         [InlineData("Some long description that is normal", 2)]
         [InlineData("Some long description\nwith a newline", 3)]
+        [InlineData("Some long description\r\nwith a newline", 3)]
         [InlineData("Some long description\nwith\nmultiple\nnewlines", 5)]
+        [InlineData("Some long description\r\nwith\r\nmultiple\r\nnewlines", 5)]
         [InlineData("Some long description\n    - With formatting", 3)]
+        [InlineData("Some long description\r\n    - With formatting", 3)]
         [InlineData("Some long description  with multiple spaces", 2)]
         public void FormatLongDescriptionTest(string longDescription, int expectedCount)
         {
