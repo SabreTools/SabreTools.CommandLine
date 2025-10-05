@@ -69,7 +69,13 @@ namespace SabreTools.CommandLine.Inputs
         /// </summary>
         public UserInput? this[string name]
         {
-            get { return Children.ContainsKey(name) ? Children[name] : null; }
+            get
+            {
+                if (!Children.TryGetValue(name, out var input))
+                    return null;
+
+                return input;
+            }
         }
 
         /// <summary>
@@ -77,7 +83,13 @@ namespace SabreTools.CommandLine.Inputs
         /// </summary>
         public UserInput? this[UserInput subfeature]
         {
-            get { return Children.ContainsKey(subfeature.Name) ? Children[subfeature.Name] : null; }
+           get
+            {
+                if (!Children.TryGetValue(subfeature.Name, out var input))
+                    return null;
+
+                return input;
+            }
         }
 
         /// <summary>
