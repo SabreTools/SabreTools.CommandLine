@@ -711,13 +711,11 @@ namespace SabreTools.CommandLine.Inputs
             // Normalize the description for output
             string longDescription = _longDescription!.Replace("\r\n", "\n");
 
-            // Create the output list
-            List<string> outputList = [];
-
             // Get the width of the console for wrapping reference
             int width = (Console.WindowWidth == 0 ? 80 : Console.WindowWidth) - 1;
 
-            // Prepare the output string
+            // Prepare the outputs
+            List<string> outputList = [];
             var output = new StringBuilder();
             output.Append(CreatePadding(pre + 4));
 
@@ -774,6 +772,11 @@ namespace SabreTools.CommandLine.Inputs
                 else
                 {
                     outputList.Add(output.ToString());
+#if NET20 || NET35
+                    output = new();
+#else
+                    output.Clear();
+#endif
                     output.Append(CreatePadding(pre + 4));
                     output.Append((output.Length == pre + 4 ? string.Empty : " ") + segment);
                 }
