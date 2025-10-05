@@ -100,7 +100,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <param name="c">Character to check against</param>
         /// <returns>True if the flag was found, false otherwise</returns>
         public bool StartsWith(char c)
-            => Flags.Exists(f => f.TrimStart('-').ToLowerInvariant()[0] == c);
+            => Flags.Exists(f => f.TrimStart('-', '/', '\\').ToLowerInvariant()[0] == c);
 
         #endregion
 

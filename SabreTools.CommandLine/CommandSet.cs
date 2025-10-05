@@ -153,9 +153,9 @@ namespace SabreTools.CommandLine
 
             // Now append all available top-level flags
             output.Add("Available options:");
-            foreach (string feature in _inputs.Keys)
+            foreach (var input in _inputs.Values)
             {
-                var outputs = _inputs[feature]?.Output(pre: 2, midpoint: 30);
+                var outputs = input.Output(pre: 2, midpoint: 30);
                 if (outputs != null)
                     output.AddRange(outputs);
             }
@@ -182,9 +182,9 @@ namespace SabreTools.CommandLine
 
             // Now append all available flags recursively
             output.Add("Available options:");
-            foreach (string feature in _inputs.Keys)
+            foreach (var input in _inputs.Values)
             {
-                var outputs = _inputs[feature]?.OutputRecursive(0, pre: 2, midpoint: 30, includeLongDescription: true);
+                var outputs = input.OutputRecursive(0, pre: 2, midpoint: 30, includeLongDescription: true);
                 if (outputs != null)
                     output.AddRange(outputs);
             }
@@ -204,67 +204,51 @@ namespace SabreTools.CommandLine
         /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
         public void OutputFeatureHelp(string? featureName, bool includeLongDescription = false)
         {
-            // Start building the output list
-            List<string> output = [];
-
-            // If the feature name is null, empty, or just consisting of `-` characters, just show everything
-            if (string.IsNullOrEmpty(featureName?.TrimStart('-')))
+            // If the feature name is null, empty, or just consisting of leading characters
+            string trimmedName = featureName?.TrimStart('-', '/', '\\') ?? string.Empty;
+            if (trimmedName.Length == 0)
             {
                 OutputGenericHelp();
                 return;
             }
 
-            // Now try to find the feature that has the name included
-            string? realname = null;
+            // If a top-level input is found
+            if (TopLevelFlag(featureName!))
+            {
+                // Retrieve the input
+                featureName = GetInputName(featureName!);
+                var input = _inputs[featureName];
+
+                // Append the formatted text
+                List<string> output = [];
+                output.Add($"Available options for {featureName}:");
+                output.AddRange(input.OutputRecursive(0, pre: 2, midpoint: 30, includeLongDescription: includeLongDescription));
+
+                // Now write out everything in a staged manner
+                WriteOutWithPauses(output);
+            }
+
+            // Find all partial matches
             List<string> startsWith = [];
-            foreach (string feature in _inputs.Keys)
+            foreach (var kvp in _inputs)
             {
-                // If we have a match to the feature name somehow
-                if (feature == featureName)
-                {
-                    realname = feature;
-                    break;
-                }
-
-                // If we have an invalid feature
-                else if (!_inputs.ContainsKey(feature) || _inputs[feature] == null)
-                {
-                    startsWith.Add(feature);
-                }
-
-                // If we have a match within the flags
-                else if (_inputs[feature]!.ContainsFlag(featureName!))
-                {
-                    realname = feature;
-                    break;
-                }
-
-                // Otherwise, we want to get features with the same start
-                else if (_inputs[feature]!.StartsWith(featureName!.TrimStart('-')[0]))
-                {
-                    startsWith.Add(feature);
-                }
+                if (kvp.Value.StartsWith(trimmedName[0]))
+                    startsWith.Add(kvp.Key);
             }
 
-            // If we have a real name found, append all available subflags recursively
-            if (realname != null)
+            // If there are possible matches, append them
+            if (startsWith.Count > 0)
             {
-                output.Add($"Available options for {realname}:");
-                output.AddRange(_inputs[realname]!.OutputRecursive(0, pre: 2, midpoint: 30, includeLongDescription: includeLongDescription));
-            }
-
-            // If no name was found but we have possible matches, show them
-            else if (startsWith.Count > 0)
-            {
+                List<string> output = [];
                 output.Add($"\"{featureName}\" not found. Did you mean:");
                 foreach (string possible in startsWith)
                 {
-                    output.AddRange(_inputs[possible]!.Output(pre: 2, midpoint: 30, includeLongDescription: includeLongDescription));
+                    output.AddRange(_inputs[possible].Output(pre: 2, midpoint: 30, includeLongDescription: includeLongDescription));
                 }
-            }
 
-            // Now write out everything in a staged manner
-            WriteOutWithPauses(output);
+                // Now write out everything in a staged manner
+                WriteOutWithPauses(output);
+            }
         }
 
         /// <summary>
