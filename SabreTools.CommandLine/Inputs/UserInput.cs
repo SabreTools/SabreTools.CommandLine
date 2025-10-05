@@ -704,6 +704,13 @@ namespace SabreTools.CommandLine.Inputs
         /// <returns>Pre-split output lines</returns>
         private List<string> FormatLongDescription(int pre, int midpoint)
         {
+            // If the long description is null or empty
+            if (string.IsNullOrEmpty(_longDescription))
+                return [];
+
+            // Normalize the description for output
+            string longDescription = _longDescription!.Replace("\r\n", "\n");
+
             // Create the output list
             List<string> outputList = [];
 
@@ -715,16 +722,16 @@ namespace SabreTools.CommandLine.Inputs
             output.Append(CreatePadding(pre + 4));
 
             // Now split the input description and start processing
-            string[]? split = _longDescription?.Split(' ');
-            if (split == null)
-                return outputList;
-
+            string[]? split = longDescription.Split(' ');
             for (int i = 0; i < split.Length; i++)
             {
+                // Cache the current segment
+                string segment = split[i];
+
                 // If we have a newline character, reset the line and continue
-                if (split[i].Contains("\n"))
+                if (segment.Contains("\n"))
                 {
-                    string[] subsplit = split[i].Replace("\r", string.Empty).Split('\n');
+                    string[] subsplit = segment.Split('\n');
                     for (int j = 0; j < subsplit.Length - 1; j++)
                     {
                         // Add the next word only if the total length doesn't go above the width of the screen
@@ -737,7 +744,7 @@ namespace SabreTools.CommandLine.Inputs
                         {
                             outputList.Add(output.ToString());
 #if NET20 || NET35
-                                output = new();
+                            output = new();
 #else
                             output.Clear();
 #endif
@@ -747,7 +754,7 @@ namespace SabreTools.CommandLine.Inputs
 
                         outputList.Add(output.ToString());
 #if NET20 || NET35
-                            output = new();
+                        output = new();
 #else
                         output.Clear();
 #endif
@@ -759,16 +766,16 @@ namespace SabreTools.CommandLine.Inputs
                 }
 
                 // Add the next word only if the total length doesn't go above the width of the screen
-                if (output.Length + split[i].Length < width)
+                if (output.Length + segment.Length < width)
                 {
-                    output.Append((output.Length == pre + 4 ? string.Empty : " ") + split[i]);
+                    output.Append((output.Length == pre + 4 ? string.Empty : " ") + segment);
                 }
                 // Otherwise, we want to cache the line to output and create a new blank string
                 else
                 {
                     outputList.Add(output.ToString());
                     output.Append(CreatePadding(pre + 4));
-                    output.Append((output.Length == pre + 4 ? string.Empty : " ") + split[i]);
+                    output.Append((output.Length == pre + 4 ? string.Empty : " ") + segment);
                 }
             }
 
