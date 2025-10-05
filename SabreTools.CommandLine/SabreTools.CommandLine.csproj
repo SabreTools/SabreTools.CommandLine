@@ -15,10 +15,14 @@
 
         <!-- Package Properties -->
         <Authors>Matt Nadareski</Authors>
+        <Description>Commandline parsing and output library</Description>
         <Copyright>Copyright (c)2016-2025 Matt Nadareski</Copyright>
         <PackageProjectUrl>https://github.com/SabreTools/</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/SabreTools/SabreTools</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/SabreTools/SabreTools.CommandLine</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageTags>commandline terminal parsing help printing</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
