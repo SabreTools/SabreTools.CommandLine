@@ -106,10 +106,12 @@ namespace SabreTools.CommandLine
         /// <summary>
         /// Get the input name for a given flag or short name
         /// </summary>
-        public string GetInputName(string name)
+        /// <param name="value">Name or flag value to match</param>
+        /// <returns>User input name on success, empty string on error</returns>
+        public string GetInputName(string value)
         {
             // Pre-split the input for efficiency
-            string[] splitInput = name.Split('=');
+            string[] splitInput = value.Split('=');
 
             foreach (var key in _inputs.Keys)
             {
@@ -147,12 +149,12 @@ namespace SabreTools.CommandLine
         }
 
         /// <summary>
-        /// Check if a flag is a top-level (main application) flag
+        /// Check if a value is a direct child input
         /// </summary>
-        /// <param name="flag">Name of the flag to check</param>
+        /// <param name="value">Name or flag value to match</param>
         /// <returns>True if the feature was found, false otherwise</returns>
-        public bool TopLevelFlag(string flag)
-            => GetInputName(flag).Length > 0;
+        public bool IsTopLevel(string value)
+            => GetInputName(value).Length > 0;
 
         #endregion
 
@@ -232,7 +234,7 @@ namespace SabreTools.CommandLine
             }
 
             // If a top-level input is found
-            if (TopLevelFlag(featureName!))
+            if (IsTopLevel(featureName!))
             {
                 // Retrieve the input
                 featureName = GetInputName(featureName!);

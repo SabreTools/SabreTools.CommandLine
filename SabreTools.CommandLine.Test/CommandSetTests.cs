@@ -72,7 +72,7 @@ namespace SabreTools.CommandLine.Test
         }
 
         [Fact]
-        public void TopLevelFlagTest()
+        public void IsTopLevelTest()
         {
             var input1 = new FlagInput("input1", "--input1", "input1");
             var input2 = new FlagInput("input2", "--input2", "input2");
@@ -81,13 +81,13 @@ namespace SabreTools.CommandLine.Test
             featureSet.Add(input1);
             featureSet.Add(input2);
 
-            bool actualTop1 = featureSet.TopLevelFlag("input1");
+            bool actualTop1 = featureSet.IsTopLevel("input1");
             Assert.True(actualTop1);
 
-            bool actualTop2 = featureSet.TopLevelFlag("--input2");
+            bool actualTop2 = featureSet.IsTopLevel("--input2");
             Assert.True(actualTop2);
 
-            bool actualTop3 = featureSet.TopLevelFlag("input3");
+            bool actualTop3 = featureSet.IsTopLevel("input3");
             Assert.False(actualTop3);
         }
     }
