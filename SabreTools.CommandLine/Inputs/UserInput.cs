@@ -44,7 +44,7 @@ namespace SabreTools.CommandLine.Inputs
 
         #region Constructors
 
-        internal UserInput(string name, string flag, string description, string? longDescription = null)
+        public UserInput(string name, string flag, string description, string? longDescription = null)
         {
             Name = name;
             Flags.Add(flag);
@@ -52,7 +52,7 @@ namespace SabreTools.CommandLine.Inputs
             _longDescription = longDescription;
         }
 
-        internal UserInput(string name, string[] flags, string description, string? longDescription = null)
+        public UserInput(string name, string[] flags, string description, string? longDescription = null)
         {
             Name = name;
             Flags.AddRange(flags);
