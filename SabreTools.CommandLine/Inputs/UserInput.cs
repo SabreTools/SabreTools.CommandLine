@@ -739,7 +739,8 @@ namespace SabreTools.CommandLine.Inputs
                         // Add the next word only if the total length doesn't go above the width of the screen
                         if (output.Length + subSegment.Length < width)
                         {
-                            output.Append((output.Length == pre + 4 ? string.Empty : " ") + subSegment);
+                            output.Append(output.Length == pre + 4 ? string.Empty : " ");
+                            output.Append(subSegment);
                         }
                         // Otherwise, we want to cache the line to output and create a new blank string
                         else
@@ -751,7 +752,8 @@ namespace SabreTools.CommandLine.Inputs
                             output.Clear();
 #endif
                             output.Append(CreatePadding(pre + 4));
-                            output.Append((output.Length == pre + 4 ? string.Empty : " ") + subSegment);
+                            output.Append(output.Length == pre + 4 ? string.Empty : " ");
+                            output.Append(subSegment);
                         }
 
                         outputList.Add(output.ToString());
@@ -770,7 +772,8 @@ namespace SabreTools.CommandLine.Inputs
                 // Add the next word only if the total length doesn't go above the width of the screen
                 if (output.Length + segment.Length < width)
                 {
-                    output.Append((output.Length == pre + 4 ? string.Empty : " ") + segment);
+                    output.Append(output.Length == pre + 4 ? string.Empty : " ");
+                    output.Append(segment);
                 }
                 // Otherwise, we want to cache the line to output and create a new blank string
                 else
@@ -782,7 +785,8 @@ namespace SabreTools.CommandLine.Inputs
                     output.Clear();
 #endif
                     output.Append(CreatePadding(pre + 4));
-                    output.Append((output.Length == pre + 4 ? string.Empty : " ") + segment);
+                    output.Append(output.Length == pre + 4 ? string.Empty : " ");
+                    output.Append(segment);
                 }
             }
 
