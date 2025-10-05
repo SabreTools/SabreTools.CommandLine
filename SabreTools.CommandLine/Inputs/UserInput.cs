@@ -732,10 +732,13 @@ namespace SabreTools.CommandLine.Inputs
                     string[] subsplit = segment.Split('\n');
                     for (int j = 0; j < subsplit.Length - 1; j++)
                     {
+                        // Cache the current segment
+                        string subSegment = subsplit[j];
+
                         // Add the next word only if the total length doesn't go above the width of the screen
-                        if (output.Length + subsplit[j].Length < width)
+                        if (output.Length + subSegment.Length < width)
                         {
-                            output.Append((output.Length == pre + 4 ? string.Empty : " ") + subsplit[j]);
+                            output.Append((output.Length == pre + 4 ? string.Empty : " ") + subSegment);
                         }
                         // Otherwise, we want to cache the line to output and create a new blank string
                         else
@@ -747,7 +750,7 @@ namespace SabreTools.CommandLine.Inputs
                             output.Clear();
 #endif
                             output.Append(CreatePadding(pre + 4));
-                            output.Append((output.Length == pre + 4 ? string.Empty : " ") + subsplit[j]);
+                            output.Append((output.Length == pre + 4 ? string.Empty : " ") + subSegment);
                         }
 
                         outputList.Add(output.ToString());
