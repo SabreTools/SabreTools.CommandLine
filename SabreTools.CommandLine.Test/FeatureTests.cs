@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net.NetworkInformation;
+using Xunit;
 
 namespace SabreTools.CommandLine.Test
 {
@@ -88,6 +89,26 @@ namespace SabreTools.CommandLine.Test
             bool actual = feature.ProcessArgs(args, index);
             Assert.True(actual);
             Assert.Empty(feature.Inputs);
+        }
+
+        [Fact]
+        public void FormatLongDescriptionTest()
+        {
+            var feature = new MockFeature("a", "a", "a", "Some long description that is normal");
+            var o = feature.FormatLongDescription(pre: 0);
+            Assert.Equal(2, o.Count);
+
+            feature = new MockFeature("a", "a", "a", "Some long description\nwith a newline");
+            o = feature.FormatLongDescription(pre: 0);
+            Assert.Equal(3, o.Count);
+
+            feature = new MockFeature("a", "a", "a", "Some long description\nwith\nmultiple\nnewlines");
+            o = feature.FormatLongDescription(pre: 0);
+            Assert.Equal(5, o.Count);
+
+            feature = new MockFeature("a", "a", "a", "Some long description\n    - With formatting");
+            o = feature.FormatLongDescription(pre: 0);
+            Assert.Equal(3, o.Count);
         }
 
         /// <summary>
