@@ -184,7 +184,7 @@ namespace SabreTools.CommandLine
             output.Add("Available options:");
             foreach (var input in _inputs.Values)
             {
-                var outputs = input.FormatRecursive(0, pre: 2, midpoint: 30, includeLongDescription: true);
+                var outputs = input.FormatRecursive(pre: 2, midpoint: 30, includeLongDescription: true);
                 if (outputs != null)
                     output.AddRange(outputs);
             }
@@ -222,7 +222,7 @@ namespace SabreTools.CommandLine
                 // Append the formatted text
                 List<string> output = [];
                 output.Add($"Available options for {featureName}:");
-                output.AddRange(input.FormatRecursive(0, pre: 2, midpoint: 30, includeLongDescription: includeLongDescription));
+                output.AddRange(input.FormatRecursive(pre: 2, midpoint: 30, includeLongDescription));
 
                 // Now write out everything in a staged manner
                 WriteOutWithPauses(output);
@@ -243,7 +243,7 @@ namespace SabreTools.CommandLine
                 output.Add($"\"{featureName}\" not found. Did you mean:");
                 foreach (string possible in startsWith)
                 {
-                    output.AddRange(_inputs[possible].Format(pre: 2, midpoint: 30, includeLongDescription: includeLongDescription));
+                    output.AddRange(_inputs[possible].Format(pre: 2, midpoint: 30, includeLongDescription));
                 }
 
                 // Now write out everything in a staged manner
