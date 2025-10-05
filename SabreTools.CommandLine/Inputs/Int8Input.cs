@@ -47,24 +47,8 @@ namespace SabreTools.CommandLine.Inputs
                 return false;
             }
 
-            // Check for space-separated
-            if (!part.Contains("="))
-            {
-                // Ensure the value exists
-                if (index + 1 >= args.Length)
-                    return false;
-
-                // If the next value is valid
-                if (!sbyte.TryParse(args[index + 1], out sbyte value))
-                    return false;
-
-                index++;
-                Value = value;
-                return true;
-            }
-
             // Check for equal separated
-            else
+            if (part.Contains("="))
             {
                 // Split the string, using the first equal sign as the separator
                 string[] tempSplit = part.Split('=');
@@ -78,6 +62,22 @@ namespace SabreTools.CommandLine.Inputs
                 if (!sbyte.TryParse(val, out sbyte value))
                     return false;
 
+                Value = value;
+                return true;
+            }
+
+            // Check for space-separated
+            else
+            {
+                // Ensure the value exists
+                if (index + 1 >= args.Length)
+                    return false;
+
+                // If the next value is valid
+                if (!sbyte.TryParse(args[index + 1], out sbyte value))
+                    return false;
+
+                index++;
                 Value = value;
                 return true;
             }

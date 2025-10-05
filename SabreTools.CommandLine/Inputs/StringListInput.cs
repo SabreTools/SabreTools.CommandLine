@@ -48,8 +48,20 @@ namespace SabreTools.CommandLine.Inputs
                 return false;
             }
 
+            // Check for equal separated
+            if (part.Contains("="))
+            {
+                // Split the string, using the first equal sign as the separator
+                string[] tempSplit = part.Split('=');
+                string val = string.Join("=", tempSplit, 1, tempSplit.Length - 1);
+
+                Value ??= [];
+                Value.Add(val);
+                return true;
+            }
+
             // Check for space-separated
-            if (!part.Contains("="))
+            else
             {
                 // Ensure the value exists
                 if (index + 1 >= args.Length)
@@ -58,18 +70,6 @@ namespace SabreTools.CommandLine.Inputs
                 index++;
                 Value ??= [];
                 Value.Add(args[index]);
-                return true;
-            }
-
-            // Check for equal separated
-            else
-            {
-                // Split the string, using the first equal sign as the separator
-                string[] tempSplit = part.Split('=');
-                string val = string.Join("=", tempSplit, 1, tempSplit.Length - 1);
-
-                Value ??= [];
-                Value.Add(val);
                 return true;
             }
         }
