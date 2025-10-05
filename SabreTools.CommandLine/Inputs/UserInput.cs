@@ -680,7 +680,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
         /// <returns>Formatted output string</returns>
-        private string FormatStandard(int pre, int midpoint)
+        internal string FormatStandard(int pre, int midpoint)
         {
             var output = new StringBuilder();
 

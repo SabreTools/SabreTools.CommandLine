@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using Xunit;
+﻿using Xunit;
 
 namespace SabreTools.CommandLine.Test
 {
@@ -91,24 +90,30 @@ namespace SabreTools.CommandLine.Test
             Assert.Empty(feature.Inputs);
         }
 
-        [Fact]
-        public void FormatLongDescriptionTest()
+        [Theory]
+        [InlineData(-1, -1, "a a")]
+        [InlineData(0, -1, "a a")]
+        [InlineData(-1, 0, "a a")]
+        [InlineData(0, 0, "a a")]
+        [InlineData(2, 30, "  a                              a")]
+        [InlineData(4, 0, "    a a")]
+        public void FormatStandardTest(int pre, int midpoint, string expected)
         {
-            var feature = new MockFeature("a", "a", "a", "Some long description that is normal");
-            var o = feature.FormatLongDescription(pre: 0);
-            Assert.Equal(2, o.Count);
+            var feature = new MockFeature("a", "a", "a");
+            string actual = feature.FormatStandard(pre, midpoint);
+            Assert.Equal(expected, actual);
+        }
 
-            feature = new MockFeature("a", "a", "a", "Some long description\nwith a newline");
-            o = feature.FormatLongDescription(pre: 0);
-            Assert.Equal(3, o.Count);
-
-            feature = new MockFeature("a", "a", "a", "Some long description\nwith\nmultiple\nnewlines");
-            o = feature.FormatLongDescription(pre: 0);
-            Assert.Equal(5, o.Count);
-
-            feature = new MockFeature("a", "a", "a", "Some long description\n    - With formatting");
-            o = feature.FormatLongDescription(pre: 0);
-            Assert.Equal(3, o.Count);
+        [Theory]
+        [InlineData("Some long description that is normal", 2)]
+        [InlineData("Some long description\nwith a newline", 3)]
+        [InlineData("Some long description\nwith\nmultiple\nnewlines", 5)]
+        [InlineData("Some long description\n    - With formatting", 3)]
+        public void FormatLongDescriptionTest(string longDescription, int expectedCount)
+        {
+            var feature = new MockFeature("a", "a", "a", longDescription);
+            var formatted = feature.FormatLongDescription(pre: 0);
+            Assert.Equal(expectedCount, formatted.Count);
         }
 
         /// <summary>
