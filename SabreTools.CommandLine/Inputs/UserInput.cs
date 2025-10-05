@@ -610,7 +610,7 @@ namespace SabreTools.CommandLine.Inputs
 
         #endregion
 
-        #region Output
+        #region Help Output
 
         /// <summary>
         /// Output this feature only
@@ -618,7 +618,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
         /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
-        public List<string> Output(int pre = 0, int midpoint = 0, bool includeLongDescription = false)
+        public List<string> Format(int pre = 0, int midpoint = 0, bool includeLongDescription = false)
         {
             // Create the output list
             List<string> outputList = [];
@@ -731,7 +731,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <param name="pre">Positive number representing number of spaces to put in front of the feature</param>
         /// <param name="midpoint">Positive number representing the column where the description should start</param>
         /// <param name="includeLongDescription">True if the long description should be formatted and output, false otherwise</param>
-        public List<string> OutputRecursive(int tabLevel, int pre = 0, int midpoint = 0, bool includeLongDescription = false)
+        public List<string> FormatRecursive(int tabLevel, int pre = 0, int midpoint = 0, bool includeLongDescription = false)
         {
             // Create the output list
             List<string> outputList = [];
@@ -851,7 +851,7 @@ namespace SabreTools.CommandLine.Inputs
             // Now let's append all subfeatures
             foreach (string feature in Children.Keys)
             {
-                outputList.AddRange(Children[feature]!.OutputRecursive(tabLevel + 1, pre, midpoint, includeLongDescription));
+                outputList.AddRange(Children[feature]!.FormatRecursive(tabLevel + 1, pre, midpoint, includeLongDescription));
             }
 
             return outputList;
