@@ -671,13 +671,13 @@ namespace SabreTools.CommandLine.Test.Inputs
         /// </summary>
         private class MockUserInput : UserInput<object?>
         {
-            public MockUserInput(string name, string flag, string description, string? detailedDescription = null)
-                : base(name, flag, description, detailedDescription)
+            public MockUserInput(string name, string flag, string description, string? detailed = null)
+                : base(name, flag, description, detailed)
             {
             }
 
-            public MockUserInput(string name, string[] flags, string description, string? detailedDescription = null)
-                : base(name, flags, description, detailedDescription)
+            public MockUserInput(string name, string[] flags, string description, string? detailed = null)
+                : base(name, flags, description, detailed)
             {
             }
 

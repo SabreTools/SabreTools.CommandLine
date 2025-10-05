@@ -47,20 +47,20 @@ namespace SabreTools.CommandLine.Inputs
 
         #region Constructors
 
-        public UserInput(string name, string flag, string description, string? detailedDescription = null)
+        public UserInput(string name, string flag, string description, string? detailed = null)
         {
             Name = name;
             Flags.Add(flag);
             Description = description;
-            DetailedDescription = detailedDescription;
+            DetailedDescription = detailed;
         }
 
-        public UserInput(string name, string[] flags, string description, string? detailedDescription = null)
+        public UserInput(string name, string[] flags, string description, string? detailed = null)
         {
             Name = name;
             Flags.AddRange(flags);
             Description = description;
-            DetailedDescription = detailedDescription;
+            DetailedDescription = detailed;
         }
 
         #endregion

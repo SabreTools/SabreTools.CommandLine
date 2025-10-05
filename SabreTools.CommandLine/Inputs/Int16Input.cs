@@ -9,14 +9,14 @@ namespace SabreTools.CommandLine.Inputs
     {
         #region Constructors
 
-        public Int16Input(string name, string flag, string description, string? detailedDescription = null)
-            : base(name, flag, description, detailedDescription)
+        public Int16Input(string name, string flag, string description, string? detailed = null)
+            : base(name, flag, description, detailed)
         {
             Value = null;
         }
 
-        public Int16Input(string name, string[] flags, string description, string? detailedDescription = null)
-            : base(name, flags, description, detailedDescription)
+        public Int16Input(string name, string[] flags, string description, string? detailed = null)
+            : base(name, flags, description, detailed)
         {
             Value = null;
         }

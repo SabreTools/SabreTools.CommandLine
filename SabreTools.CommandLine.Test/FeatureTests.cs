@@ -125,13 +125,13 @@ namespace SabreTools.CommandLine.Test
         /// </summary>
         private class MockFeature : Feature
         {
-            public MockFeature(string name, string flag, string description, string? detailedDescription = null)
-                : base(name, flag, description, detailedDescription)
+            public MockFeature(string name, string flag, string description, string? detailed = null)
+                : base(name, flag, description, detailed)
             {
             }
 
-            public MockFeature(string name, string[] flags, string description, string? detailedDescription = null)
-                : base(name, flags, description, detailedDescription)
+            public MockFeature(string name, string[] flags, string description, string? detailed = null)
+                : base(name, flags, description, detailed)
             {
             }
 
