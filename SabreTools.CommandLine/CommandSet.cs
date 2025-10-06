@@ -871,5 +871,63 @@ namespace SabreTools.CommandLine
         }
 
         #endregion
+
+        #region Processing
+
+        /// <summary>
+        /// Process args list with default handling
+        /// </summary>
+        /// <param name="args">Set of arguments to process</param>
+        /// <returns>True if all arguments were processed correctly, false otherwise</returns>
+        /// <remarks>
+        /// This default processing implementation assumes a few key points:
+        /// - Top-level items are all <see cref="Feature"/>
+        /// - There is only top-level item allowed at a time
+        /// - The first argument is always the <see cref="Feature"/> flag
+        /// </remarks>
+        public bool ProcessArgs(string[] args)
+        {
+            // If there's no arguments, show help
+            if (args.Length == 0)
+            {
+                OutputGenericHelp();
+                return true;
+            }
+
+            // Get the first argument as a feature flag
+            string featureName = args[0];
+
+            // Get the associated feature
+            var topLevel = GetTopLevel(featureName);
+            if (topLevel == null || topLevel is not Feature feature)
+            {
+                Console.WriteLine($"'{featureName}' is not valid feature flag");
+                OutputFeatureHelp(featureName);
+                return false;
+            }
+
+            // Now verify that all other flags are valid
+            if (!feature.ProcessArgs(args, 1))
+                return false;
+
+            // If inputs are required
+            if (feature.RequiresInputs && !feature.VerifyInputs())
+            {
+                OutputFeatureHelp(topLevel.Name);
+                return false;
+            }
+
+            // Now execute the current feature
+            if (!feature.Execute())
+            {
+                Console.Error.WriteLine("An error occurred during processing!");
+                OutputFeatureHelp(topLevel.Name);
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }
