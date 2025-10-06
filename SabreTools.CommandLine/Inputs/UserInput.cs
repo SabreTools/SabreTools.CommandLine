@@ -699,13 +699,14 @@ namespace SabreTools.CommandLine.Inputs
         {
             var output = new StringBuilder();
 
+            output.Append(CreatePadding(pre));
+            output.Append(FormatFlags());
+
             // Determine the midpoint padding size
             int midpointPadding = midpoint > 0 && output.Length < midpoint
                 ? midpoint - output.Length
                 : 1;
 
-            output.Append(CreatePadding(pre));
-            output.Append(FormatFlags());
             output.Append(CreatePadding(midpointPadding));
             output.Append(Description);
 
