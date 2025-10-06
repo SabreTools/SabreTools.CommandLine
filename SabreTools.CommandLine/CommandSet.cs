@@ -101,6 +101,500 @@ namespace SabreTools.CommandLine
 
         #endregion
 
+        #region Children
+
+        /// <summary>
+        /// Get a boolean value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public bool GetBoolean(string key, bool defaultValue = false)
+        {
+            if (TryGetBoolean(key, out bool value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+       /// <summary>
+        /// Get an Int8 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public sbyte GetInt8(string key, sbyte defaultValue = sbyte.MinValue)
+        {
+            if (TryGetInt8(key, out sbyte value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get an Int16 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public short GetInt16(string key, short defaultValue = short.MinValue)
+        {
+            if (TryGetInt16(key, out short value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get an Int32 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public int GetInt32(string key, int defaultValue = int.MinValue)
+        {
+            if (TryGetInt32(key, out int value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get an Int64 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public long GetInt64(string key, long defaultValue = long.MinValue)
+        {
+            if (TryGetInt64(key, out long value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get a string value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public string? GetString(string key, string? defaultValue = null)
+        {
+            if (TryGetString(key, out string? value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get a string list value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public List<string> GetStringList(string key)
+        {
+            if (TryGetStringList(key, out var value))
+                return value;
+
+            return [];
+        }
+
+        /// <summary>
+        /// Get a UInt8 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public byte GetUInt8(string key, byte defaultValue = byte.MinValue)
+        {
+            if (TryGetUInt8(key, out byte value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get a UInt16 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public ushort GetUInt16(string key, ushort defaultValue = ushort.MinValue)
+        {
+            if (TryGetUInt16(key, out ushort value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get a UInt32 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public uint GetUInt32(string key, uint defaultValue = uint.MinValue)
+        {
+            if (TryGetUInt32(key, out uint value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get a UInt64 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>The value if found, the default value otherwise</returns>
+        public ulong GetUInt64(string key, ulong defaultValue = ulong.MinValue)
+        {
+            if (TryGetUInt64(key, out ulong value, defaultValue))
+                return value;
+
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Get a boolean value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetBoolean(string key, out bool value, bool defaultValue = false)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is BooleanInput b)
+                {
+                    value = b.Value ?? defaultValue;
+                    return true;
+                }
+                else if (input is FlagInput f)
+                {
+                    value = f.Value;
+                    return true;
+                }
+
+                throw new ArgumentException("Feature is not a bool");
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetBoolean(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get an Int8 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetInt8(string key, out sbyte value, sbyte defaultValue = sbyte.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not Int8Input i)
+                    throw new ArgumentException("Feature is not an sbyte");
+
+                value = i.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetInt8(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get an Int16 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetInt16(string key, out short value, short defaultValue = short.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not Int16Input i)
+                    throw new ArgumentException("Feature is not a short");
+
+                value = i.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetInt16(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get an Int32 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetInt32(string key, out int value, int defaultValue = int.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not Int32Input i)
+                    throw new ArgumentException("Feature is not an int");
+
+                value = i.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetInt32(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get an Int64 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetInt64(string key, out long value, long defaultValue = long.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not Int64Input l)
+                    throw new ArgumentException("Feature is not a long");
+
+                value = l.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetInt64(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get a string value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetString(string key, out string? value, string? defaultValue = null)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not StringInput s)
+                    throw new ArgumentException("Feature is not a string");
+
+                value = s.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetString(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get a string list value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetStringList(string key, out List<string> value)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not StringListInput l)
+                    throw new ArgumentException("Feature is not a list");
+
+                value = l.Value ?? [];
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetStringList(key, out value))
+                    return true;
+            }
+
+            value = [];
+            return false;
+        }
+
+        /// <summary>
+        /// Get a UInt8 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetUInt8(string key, out byte value, byte defaultValue = byte.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not UInt8Input i)
+                    throw new ArgumentException("Feature is not an byte");
+
+                value = i.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetUInt8(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get a UInt16 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetUInt16(string key, out ushort value, ushort defaultValue = ushort.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not UInt16Input i)
+                    throw new ArgumentException("Feature is not a ushort");
+
+                value = i.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetUInt16(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get a UInt32 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetUInt32(string key, out uint value, uint defaultValue = uint.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not UInt32Input i)
+                    throw new ArgumentException("Feature is not an uint");
+
+                value = i.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetUInt32(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get a UInt64 value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <param name="defaultValue">Optional default value if not found</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetUInt64(string key, out ulong value, ulong defaultValue = ulong.MinValue)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not UInt64Input l)
+                    throw new ArgumentException("Feature is not a ulong");
+
+                value = l.Value ?? defaultValue;
+                return true;
+            }
+
+            // Check all children recursively
+            foreach (var child in _inputs.Values)
+            {
+                if (child.TryGetUInt64(key, out value, defaultValue))
+                    return true;
+            }
+
+            value = defaultValue;
+            return false;
+        }
+
+        #endregion
+
         #region Inputs
 
         /// <summary>
