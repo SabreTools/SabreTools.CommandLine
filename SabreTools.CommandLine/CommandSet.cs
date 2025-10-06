@@ -908,7 +908,10 @@ namespace SabreTools.CommandLine
 
             // Now verify that all other flags are valid
             if (!feature.ProcessArgs(args, 1))
+            {
+                OutputFeatureHelp(topLevel.Name);
                 return false;
+            }
 
             // If inputs are required
             if (feature.RequiresInputs && !feature.VerifyInputs())
