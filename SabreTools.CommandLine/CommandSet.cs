@@ -163,7 +163,8 @@ namespace SabreTools.CommandLine
         /// <summary>
         /// Output top-level features only
         /// </summary>
-        public void OutputGenericHelp()
+        /// <param name="detailed">True if the detailed descriptions should be formatted and output, false otherwise</param>
+        public void OutputGenericHelp(bool detailed = false)
         {
             // Start building the output list
             List<string> output = [];
@@ -176,7 +177,7 @@ namespace SabreTools.CommandLine
             output.Add("Available options:");
             foreach (var input in _inputs.Values)
             {
-                var outputs = input.Format(pre: 2, midpoint: 30);
+                var outputs = input.Format(pre: 2, midpoint: 30, detailed);
                 if (outputs != null)
                     output.AddRange(outputs);
             }
@@ -192,7 +193,8 @@ namespace SabreTools.CommandLine
         /// <summary>
         /// Output all features recursively
         /// </summary>
-        public void OutputAllHelp()
+        /// <param name="detailed">True if the detailed descriptions should be formatted and output, false otherwise</param>
+        public void OutputAllHelp(bool detailed = false)
         {
             // Start building the output list
             List<string> output = [];
@@ -205,7 +207,7 @@ namespace SabreTools.CommandLine
             output.Add("Available options:");
             foreach (var input in _inputs.Values)
             {
-                var outputs = input.FormatRecursive(pre: 2, midpoint: 30, detailed: true);
+                var outputs = input.FormatRecursive(pre: 2, midpoint: 30, detailed);
                 if (outputs != null)
                     output.AddRange(outputs);
             }
