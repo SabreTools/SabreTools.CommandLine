@@ -891,7 +891,7 @@ namespace SabreTools.CommandLine
             // If there's no arguments, show help
             if (args.Length == 0)
             {
-                OutputGenericHelp();
+                OutputAllHelp();
                 return true;
             }
 
