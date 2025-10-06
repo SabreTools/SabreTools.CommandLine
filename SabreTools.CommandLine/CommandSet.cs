@@ -934,14 +934,7 @@ namespace SabreTools.CommandLine
             }
 
             // Now execute the current feature
-            if (!feature.Execute())
-            {
-                Console.Error.WriteLine("An error occurred during processing!");
-                OutputFeatureHelp(topLevel.Name);
-                return false;
-            }
-
-            return true;
+            return feature.Execute();
         }
 
         #endregion
