@@ -298,7 +298,7 @@ namespace SabreTools.CommandLine.Inputs
                     return true;
                 }
 
-                throw new ArgumentException("Feature is not a bool");
+                throw new ArgumentException("Input is not a bool");
             }
 
             // Check all children recursively
@@ -325,7 +325,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not Int8Input i)
-                    throw new ArgumentException("Feature is not an sbyte");
+                    throw new ArgumentException("Input is not an sbyte");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -355,7 +355,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not Int16Input i)
-                    throw new ArgumentException("Feature is not a short");
+                    throw new ArgumentException("Input is not a short");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -385,7 +385,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not Int32Input i)
-                    throw new ArgumentException("Feature is not an int");
+                    throw new ArgumentException("Input is not an int");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -415,7 +415,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not Int64Input l)
-                    throw new ArgumentException("Feature is not a long");
+                    throw new ArgumentException("Input is not a long");
 
                 value = l.Value ?? defaultValue;
                 return true;
@@ -445,7 +445,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not StringInput s)
-                    throw new ArgumentException("Feature is not a string");
+                    throw new ArgumentException("Input is not a string");
 
                 value = s.Value ?? defaultValue;
                 return true;
@@ -474,7 +474,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not StringListInput l)
-                    throw new ArgumentException("Feature is not a list");
+                    throw new ArgumentException("Input is not a list");
 
                 value = l.Value ?? [];
                 return true;
@@ -504,7 +504,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not UInt8Input i)
-                    throw new ArgumentException("Feature is not an byte");
+                    throw new ArgumentException("Input is not an byte");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -534,7 +534,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not UInt16Input i)
-                    throw new ArgumentException("Feature is not a ushort");
+                    throw new ArgumentException("Input is not a ushort");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -564,7 +564,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not UInt32Input i)
-                    throw new ArgumentException("Feature is not an uint");
+                    throw new ArgumentException("Input is not an uint");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -594,7 +594,7 @@ namespace SabreTools.CommandLine.Inputs
             if (Children.TryGetValue(key, out var input))
             {
                 if (input is not UInt64Input l)
-                    throw new ArgumentException("Feature is not a ulong");
+                    throw new ArgumentException("Input is not a ulong");
 
                 value = l.Value ?? defaultValue;
                 return true;

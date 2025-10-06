@@ -117,7 +117,20 @@ namespace SabreTools.CommandLine
             return defaultValue;
         }
 
-       /// <summary>
+        /// <summary>
+        /// Get a Feature value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <returns>The value if found, null otherwise</returns>
+        public Feature? GetFeature(string key)
+        {
+            if (TryGetFeature(key, out Feature? value))
+                return value;
+
+            return null;
+        }
+
+        /// <summary>
         /// Get an Int8 value from a named input
         /// </summary>
         /// <param name="key">Input name to retrieve, if possible</param>
@@ -280,7 +293,7 @@ namespace SabreTools.CommandLine
                     return true;
                 }
 
-                throw new ArgumentException("Feature is not a bool");
+                throw new ArgumentException("Input is not a bool");
             }
 
             // Check all children recursively
@@ -291,6 +304,29 @@ namespace SabreTools.CommandLine
             }
 
             value = defaultValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Get a Feature value from a named input
+        /// </summary>
+        /// <param name="key">Input name to retrieve, if possible</param>
+        /// <param name="value">Value that was found, default value otherwise</param>
+        /// <returns>True if the value was found, false otherwise</returns>
+        public bool TryGetFeature(string key, out Feature? value)
+        {
+            // Try to check immediate children
+            if (_inputs.TryGetValue(key, out var input))
+            {
+                if (input is not Feature i)
+                    throw new ArgumentException("Input is not a Feature");
+
+                value = i;
+                return true;
+            }
+
+            // TODO: Investigate if nested features should be supported
+            value = null;
             return false;
         }
 
@@ -307,7 +343,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not Int8Input i)
-                    throw new ArgumentException("Feature is not an sbyte");
+                    throw new ArgumentException("Input is not an sbyte");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -337,7 +373,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not Int16Input i)
-                    throw new ArgumentException("Feature is not a short");
+                    throw new ArgumentException("Input is not a short");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -367,7 +403,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not Int32Input i)
-                    throw new ArgumentException("Feature is not an int");
+                    throw new ArgumentException("Input is not an int");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -397,7 +433,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not Int64Input l)
-                    throw new ArgumentException("Feature is not a long");
+                    throw new ArgumentException("Input is not a long");
 
                 value = l.Value ?? defaultValue;
                 return true;
@@ -427,7 +463,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not StringInput s)
-                    throw new ArgumentException("Feature is not a string");
+                    throw new ArgumentException("Input is not a string");
 
                 value = s.Value ?? defaultValue;
                 return true;
@@ -456,7 +492,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not StringListInput l)
-                    throw new ArgumentException("Feature is not a list");
+                    throw new ArgumentException("Input is not a list");
 
                 value = l.Value ?? [];
                 return true;
@@ -486,7 +522,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not UInt8Input i)
-                    throw new ArgumentException("Feature is not an byte");
+                    throw new ArgumentException("Input is not an byte");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -516,7 +552,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not UInt16Input i)
-                    throw new ArgumentException("Feature is not a ushort");
+                    throw new ArgumentException("Input is not a ushort");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -546,7 +582,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not UInt32Input i)
-                    throw new ArgumentException("Feature is not an uint");
+                    throw new ArgumentException("Input is not an uint");
 
                 value = i.Value ?? defaultValue;
                 return true;
@@ -576,7 +612,7 @@ namespace SabreTools.CommandLine
             if (_inputs.TryGetValue(key, out var input))
             {
                 if (input is not UInt64Input l)
-                    throw new ArgumentException("Feature is not a ulong");
+                    throw new ArgumentException("Input is not a ulong");
 
                 value = l.Value ?? defaultValue;
                 return true;

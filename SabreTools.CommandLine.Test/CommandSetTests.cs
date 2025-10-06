@@ -148,6 +148,63 @@ namespace SabreTools.CommandLine.Test
 
         #endregion
 
+        #region GetFeature
+
+        [Fact]
+        public void GetFeature_InvalidKey_Null()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockFeature("b", "b", "b");
+            commandSet.Add(child);
+
+            Feature? actual = commandSet.GetFeature("c");
+            Assert.Null(actual);
+        }
+
+        [Fact]
+        public void GetFeature_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetFeature("b"));
+        }
+
+        [Fact]
+        public void GetFeature_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockFeature("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b"], ref index);
+
+            Feature? actual = commandSet.GetFeature("b");
+            Assert.NotNull(actual);
+            Assert.Equal("b", actual.Name);
+            Assert.True(actual.Value);
+        }
+
+        [Fact]
+        public void GetFeature_NestedExists_Null()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new MockFeature("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c"], ref index);
+
+            Feature? actual = commandSet.GetFeature("c");
+            Assert.Null(actual);
+        }
+
+        #endregion
+
         #region GetInt8
 
         [Fact]
@@ -699,6 +756,28 @@ namespace SabreTools.CommandLine.Test
         }
 
         #endregion
+
+        /// <summary>
+        /// Mock Feature implementation for testing
+        /// </summary>
+        private class MockFeature : Feature
+        {
+            public MockFeature(string name, string flag, string description, string? detailed = null)
+                : base(name, flag, description, detailed)
+            {
+            }
+
+            public MockFeature(string name, string[] flags, string description, string? detailed = null)
+                : base(name, flags, description, detailed)
+            {
+            }
+
+            /// <inheritdoc/>
+            public override bool Execute() => true;
+
+            /// <inheritdoc/>
+            public override bool VerifyInputs() => true;
+        }
 
         /// <summary>
         /// Mock UserInput implementation for testing
