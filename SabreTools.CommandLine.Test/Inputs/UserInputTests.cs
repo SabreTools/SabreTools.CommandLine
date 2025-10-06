@@ -154,7 +154,7 @@ namespace SabreTools.CommandLine.Test.Inputs
         }
 
         [Fact]
-        public void GetFeature_NestedExists_Null()
+        public void GetFeature_NestedExists_Returns()
         {
             UserInput userInput = new MockUserInput("a", "a", "a");
             var child = new MockUserInput("b", "b", "b");
@@ -166,7 +166,9 @@ namespace SabreTools.CommandLine.Test.Inputs
             subChild.ProcessInput(["c"], ref index);
 
             Feature? actual = userInput.GetFeature("c");
-            Assert.Null(actual);
+            Assert.NotNull(actual);
+            Assert.Equal("c", actual.Name);
+            Assert.True(actual.Value);
         }
 
         #endregion

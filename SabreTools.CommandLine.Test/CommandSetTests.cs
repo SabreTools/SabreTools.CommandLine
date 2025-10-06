@@ -188,7 +188,7 @@ namespace SabreTools.CommandLine.Test
         }
 
         [Fact]
-        public void GetFeature_NestedExists_Null()
+        public void GetFeature_NestedExists_Returns()
         {
             var commandSet = new CommandSet();
             var child = new MockUserInput("b", "b", "b");
@@ -200,7 +200,9 @@ namespace SabreTools.CommandLine.Test
             subChild.ProcessInput(["c"], ref index);
 
             Feature? actual = commandSet.GetFeature("c");
-            Assert.Null(actual);
+            Assert.NotNull(actual);
+            Assert.Equal("c", actual.Name);
+            Assert.True(actual.Value);
         }
 
         #endregion

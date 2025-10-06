@@ -343,7 +343,13 @@ namespace SabreTools.CommandLine.Inputs
                 return true;
             }
 
-            // TODO: Investigate if nested features should be supported
+            // Check all children recursively
+            foreach (var child in Children.Values)
+            {
+                if (child.TryGetFeature(key, out value))
+                    return true;
+            }
+
             value = null;
             return false;
         }
