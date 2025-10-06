@@ -759,6 +759,71 @@ namespace SabreTools.CommandLine.Test
 
         #endregion
 
+        #region ProcessArgs
+
+        [Fact]
+        public void ProcessArgs_EmptyArgs_Success()
+        {
+            CommandSet commandSet = new CommandSet();
+
+            string[] args = [];
+
+            bool actual = commandSet.ProcessArgs(args);
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void ProcessArgs_ValidArgs_Success()
+        {
+            CommandSet commandSet = new CommandSet();
+            Feature feature = new MockFeature("a", "a", "a");
+            feature.Add(new FlagInput("b", "b", "b"));
+            feature.Add(new FlagInput("c", "c", "c"));
+            commandSet.Add(feature);
+
+            string[] args = ["a", "b", "c"];
+
+            bool actual = commandSet.ProcessArgs(args);
+            Assert.True(actual);
+            Assert.Empty(feature.Inputs);
+        }
+
+        [Fact]
+        public void ProcessArgs_InvalidArg_AddedAsGeneric()
+        {
+            CommandSet commandSet = new CommandSet();
+            Feature feature = new MockFeature("a", "a", "a");
+            feature.Add(new FlagInput("b", "b", "b"));
+            feature.Add(new FlagInput("d", "d", "d"));
+            commandSet.Add(feature);
+
+            string[] args = ["a", "b", "c"];
+
+            bool actual = commandSet.ProcessArgs(args);
+            Assert.True(actual);
+            string input = Assert.Single(feature.Inputs);
+            Assert.Equal("c", input);
+        }
+
+        [Fact]
+        public void ProcessArgs_NestedArgs_Success()
+        {
+            CommandSet commandSet = new CommandSet();
+            Feature feature = new MockFeature("a", "a", "a");
+            var sub = new FlagInput("b", "b", "b");
+            sub.Add(new FlagInput("c", "c", "c"));
+            feature.Add(sub);
+            commandSet.Add(feature);
+
+            string[] args = ["a", "b", "c"];
+
+            bool actual = commandSet.ProcessArgs(args);
+            Assert.True(actual);
+            Assert.Empty(feature.Inputs);
+        }
+
+        #endregion
+
         /// <summary>
         /// Mock Feature implementation for testing
         /// </summary>
