@@ -50,9 +50,29 @@ namespace SabreTools.CommandLine
         /// Create a new CommandSet with a printable header
         /// </summary>
         /// <param name="header">Custom commandline header to be printed when outputting help</param>
+        public CommandSet(string header)
+        {
+            _header.Add(header);
+        }
+
+        /// <summary>
+        /// Create a new CommandSet with a printable header
+        /// </summary>
+        /// <param name="header">Custom commandline header to be printed when outputting help</param>
         public CommandSet(List<string> header)
         {
             _header.AddRange(header);
+        }
+
+        /// <summary>
+        /// Create a new CommandSet with a printable header
+        /// </summary>
+        /// <param name="header">Custom commandline header to be printed when outputting help</param>
+        /// <param name="footer">Custom commandline footer to be printed when outputting help</param>
+        public CommandSet(string header, string footer)
+        {
+            _header.Add(header);
+            _footer.Add(footer);
         }
 
         /// <summary>
