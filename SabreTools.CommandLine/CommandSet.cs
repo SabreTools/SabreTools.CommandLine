@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SabreTools.CommandLine.Features;
 using SabreTools.CommandLine.Inputs;
 
 namespace SabreTools.CommandLine
@@ -904,6 +905,18 @@ namespace SabreTools.CommandLine
                 Console.WriteLine($"'{featureName}' is not valid feature flag");
                 OutputFeatureHelp(featureName);
                 return false;
+            }
+
+            // Handle default help functionality
+            if (topLevel is Help helpFeature)
+            {
+                helpFeature.ProcessArgs(args, 0, this);
+                return true;
+            }
+            else if (topLevel is HelpExtended helpExtFeature)
+            {
+                helpExtFeature.ProcessArgs(args, 0, this);
+                return true;
             }
 
             // Now verify that all other flags are valid
