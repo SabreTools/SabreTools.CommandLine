@@ -1,4 +1,6 @@
-﻿using SabreTools.CommandLine.Inputs;
+﻿using System;
+using System.Collections.Generic;
+using SabreTools.CommandLine.Inputs;
 using Xunit;
 
 namespace SabreTools.CommandLine.Test
@@ -89,6 +91,635 @@ namespace SabreTools.CommandLine.Test
 
             bool actualTop3 = featureSet.IsTopLevel("input3");
             Assert.False(actualTop3);
+        }
+
+        #region GetBoolean
+
+        [Fact]
+        public void GetBoolean_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new BooleanInput("b", "b", "b");
+            commandSet.Add(child);
+
+            bool actual = commandSet.GetBoolean("c");
+            Assert.False(actual);
+        }
+
+        [Fact]
+        public void GetBoolean_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetBoolean("b"));
+        }
+
+        [Fact]
+        public void GetBoolean_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new BooleanInput("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "true"], ref index);
+
+            bool actual = commandSet.GetBoolean("b");
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void GetBoolean_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new BooleanInput("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "true"], ref index);
+
+            bool actual = commandSet.GetBoolean("c");
+            Assert.True(actual);
+        }
+
+        #endregion
+
+        #region GetInt8
+
+        [Fact]
+        public void GetInt8_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int8Input("b", "b", "b");
+            commandSet.Add(child);
+
+            sbyte actual = commandSet.GetInt8("c");
+            Assert.Equal(sbyte.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetInt8_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetInt8("b"));
+        }
+
+        [Fact]
+        public void GetInt8_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int8Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            sbyte actual = commandSet.GetInt8("b");
+            Assert.Equal(5, actual);
+        }
+
+        [Fact]
+        public void GetInt8_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new Int8Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            sbyte actual = commandSet.GetInt8("c");
+            Assert.Equal(5, actual);
+        }
+
+        #endregion
+
+        #region GetInt16
+
+        [Fact]
+        public void GetInt16_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int16Input("b", "b", "b");
+            commandSet.Add(child);
+
+            short actual = commandSet.GetInt16("c");
+            Assert.Equal(short.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetInt16_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetInt16("b"));
+        }
+
+        [Fact]
+        public void GetInt16_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int16Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            short actual = commandSet.GetInt16("b");
+            Assert.Equal(5, actual);
+        }
+
+        [Fact]
+        public void GetInt16_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new Int16Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            short actual = commandSet.GetInt16("c");
+            Assert.Equal(5, actual);
+        }
+
+        #endregion
+
+        #region GetInt32
+
+        [Fact]
+        public void GetInt32_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int32Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int actual = commandSet.GetInt32("c");
+            Assert.Equal(int.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetInt32_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetInt32("b"));
+        }
+
+        [Fact]
+        public void GetInt32_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int32Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            int actual = commandSet.GetInt32("b");
+            Assert.Equal(5, actual);
+        }
+
+        [Fact]
+        public void GetInt32_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new Int32Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            int actual = commandSet.GetInt32("c");
+            Assert.Equal(5, actual);
+        }
+
+        #endregion
+
+        #region GetInt64
+
+        [Fact]
+        public void GetInt64_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int64Input("b", "b", "b");
+            commandSet.Add(child);
+
+            long actual = commandSet.GetInt64("c");
+            Assert.Equal(long.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetInt64_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetInt64("b"));
+        }
+
+        [Fact]
+        public void GetInt64_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new Int64Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            long actual = commandSet.GetInt64("b");
+            Assert.Equal(5, actual);
+        }
+
+        [Fact]
+        public void GetInt64_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new Int64Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            long actual = commandSet.GetInt64("c");
+            Assert.Equal(5, actual);
+        }
+
+        #endregion
+
+        #region GetString
+
+        [Fact]
+        public void GetString_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new StringInput("b", "b", "b");
+            commandSet.Add(child);
+
+            string? actual = commandSet.GetString("c");
+            Assert.Null(actual);
+        }
+
+        [Fact]
+        public void GetString_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetString("b"));
+        }
+
+        [Fact]
+        public void GetString_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new StringInput("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "value"], ref index);
+
+            string? actual = commandSet.GetString("b");
+            Assert.Equal("value", actual);
+        }
+
+        [Fact]
+        public void GetString_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new StringInput("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "value"], ref index);
+
+            string? actual = commandSet.GetString("c");
+            Assert.Equal("value", actual);
+        }
+
+        #endregion
+
+        #region GetStringList
+
+        [Fact]
+        public void GetStringList_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new StringListInput("b", "b", "b");
+            commandSet.Add(child);
+
+            List<string> actual = commandSet.GetStringList("c");
+            Assert.Empty(actual);
+        }
+
+        [Fact]
+        public void GetStringList_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetStringList("b"));
+        }
+
+        [Fact]
+        public void GetStringList_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new StringListInput("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "value"], ref index);
+
+            List<string> actual = commandSet.GetStringList("b");
+            string value = Assert.Single(actual);
+            Assert.Equal("value", value);
+        }
+
+        [Fact]
+        public void GetStringList_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new StringListInput("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "value"], ref index);
+
+            List<string> actual = commandSet.GetStringList("c");
+            string value = Assert.Single(actual);
+            Assert.Equal("value", value);
+        }
+
+        #endregion
+
+        #region GetUInt8
+
+        [Fact]
+        public void GetUInt8_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt8Input("b", "b", "b");
+            commandSet.Add(child);
+
+            byte actual = commandSet.GetUInt8("c");
+            Assert.Equal(byte.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetUInt8_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetUInt8("b"));
+        }
+
+        [Fact]
+        public void GetUInt8_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt8Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            byte actual = commandSet.GetUInt8("b");
+            Assert.Equal(5, actual);
+        }
+
+        [Fact]
+        public void GetUInt8_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new UInt8Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            byte actual = commandSet.GetUInt8("c");
+            Assert.Equal(5, actual);
+        }
+
+        #endregion
+
+        #region GetUInt16
+
+        [Fact]
+        public void GetUInt16_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt16Input("b", "b", "b");
+            commandSet.Add(child);
+
+            ushort actual = commandSet.GetUInt16("c");
+            Assert.Equal(ushort.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetUInt16_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetUInt16("b"));
+        }
+
+        [Fact]
+        public void GetUInt16_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt16Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            ushort actual = commandSet.GetUInt16("b");
+            Assert.Equal(5, actual);
+        }
+
+        [Fact]
+        public void GetUInt16_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new UInt16Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            ushort actual = commandSet.GetUInt16("c");
+            Assert.Equal(5, actual);
+        }
+
+        #endregion
+
+        #region GetUInt32
+
+        [Fact]
+        public void GetUInt32_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt32Input("b", "b", "b");
+            commandSet.Add(child);
+
+            uint actual = commandSet.GetUInt32("c");
+            Assert.Equal(uint.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetUInt32_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetUInt32("b"));
+        }
+
+        [Fact]
+        public void GetUInt32_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt32Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            uint actual = commandSet.GetUInt32("b");
+            Assert.Equal(5u, actual);
+        }
+
+        [Fact]
+        public void GetUInt32_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new UInt32Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            uint actual = commandSet.GetUInt32("c");
+            Assert.Equal(5u, actual);
+        }
+
+        #endregion
+
+        #region GetUInt64
+
+        [Fact]
+        public void GetUInt64_InvalidKey_DefaultValue()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt64Input("b", "b", "b");
+            commandSet.Add(child);
+
+            ulong actual = commandSet.GetUInt64("c");
+            Assert.Equal(ulong.MinValue, actual);
+        }
+
+        [Fact]
+        public void GetUInt64_Exists_WrongType_Throws()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+
+            Assert.Throws<ArgumentException>(() => _ = commandSet.GetUInt64("b"));
+        }
+
+        [Fact]
+        public void GetUInt64_Exists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new UInt64Input("b", "b", "b");
+            commandSet.Add(child);
+
+            int index = 0;
+            child.ProcessInput(["b", "5"], ref index);
+
+            ulong actual = commandSet.GetUInt64("b");
+            Assert.Equal(5u, actual);
+        }
+
+        [Fact]
+        public void GetUInt64_NestedExists_Returns()
+        {
+            var commandSet = new CommandSet();
+            var child = new MockUserInput("b", "b", "b");
+            commandSet.Add(child);
+            var subChild = new UInt64Input("c", "c", "c");
+            child.Add(subChild);
+
+            int index = 0;
+            subChild.ProcessInput(["c", "5"], ref index);
+
+            ulong actual = commandSet.GetUInt64("c");
+            Assert.Equal(5u, actual);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Mock UserInput implementation for testing
+        /// </summary>
+        private class MockUserInput : UserInput<object?>
+        {
+            public MockUserInput(string name, string flag, string description, string? detailed = null)
+                : base(name, flag, description, detailed)
+            {
+            }
+
+            public MockUserInput(string name, string[] flags, string description, string? detailed = null)
+                : base(name, flags, description, detailed)
+            {
+            }
+
+            /// <inheritdoc/>
+            public override bool ProcessInput(string[] args, ref int index) => true;
+
+            /// <inheritdoc/>
+            protected override string FormatFlags() => string.Empty;
         }
     }
 }
