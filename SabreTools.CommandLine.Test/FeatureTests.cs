@@ -95,7 +95,7 @@ namespace SabreTools.CommandLine.Test
         [InlineData(0, -1, "a a")]
         [InlineData(-1, 0, "a a")]
         [InlineData(0, 0, "a a")]
-        [InlineData(2, 30, "  a                              a")]
+        [InlineData(2, 30, "  a                           a")]
         [InlineData(4, 0, "    a a")]
         public void FormatStandardTest(int pre, int midpoint, string expected)
         {
