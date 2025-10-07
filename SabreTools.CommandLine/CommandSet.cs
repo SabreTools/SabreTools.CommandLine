@@ -791,8 +791,8 @@ namespace SabreTools.CommandLine
             // If custom help text is defined
             if (CustomHelp != null)
             {
-                CustomHelp = CustomHelp.Replace("\r\n", "\n");
-                string[] customLines = CustomHelp.Split("\n");
+                string customHelp = CustomHelp.Replace("\r\n", "\n");
+                string[] customLines = customHelp.Split('\n');
                 output.AddRange(customLines);
             }
             else
