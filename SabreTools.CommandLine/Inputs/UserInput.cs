@@ -41,7 +41,7 @@ namespace SabreTools.CommandLine.Inputs
         /// <summary>
         /// Set of children associated with this input
         /// </summary>
-        protected readonly Dictionary<string, UserInput> Children = [];
+        internal protected readonly Dictionary<string, UserInput> Children = [];
 
         #endregion
 

@@ -13,9 +13,16 @@ namespace SabreTools.CommandLine.Test
             var input1 = new FlagInput("input1", "--input1", "input1");
             var input2 = new FlagInput("input2", "--input2", "input2");
 
+            var feature1 = new MockFeature("feature1", "feature1", "feature1");
+            var inputA = new FlagInput("inputA", "--inputA", "inputA");
+            var inputB = new FlagInput("inputB", "--inputB", "inputB");
+            feature1.Add(inputA);
+            feature1.Add(inputB);
+
             var featureSet = new CommandSet();
             featureSet.Add(input1);
             featureSet.Add(input2);
+            featureSet.AddChildrenFrom(feature1);
 
             var actualInput1 = featureSet["input1"];
             Assert.NotNull(actualInput1);
@@ -27,6 +34,14 @@ namespace SabreTools.CommandLine.Test
 
             var actualInput3 = featureSet["input3"];
             Assert.Null(actualInput3);
+
+            var actualInputA = featureSet["inputA"];
+            Assert.NotNull(actualInputA);
+            Assert.Equal("inputA", actualInputA.Name);
+
+            var actualinputB = featureSet["inputB"];
+            Assert.NotNull(actualinputB);
+            Assert.Equal("inputB", actualinputB.Name);
         }
 
         [Fact]

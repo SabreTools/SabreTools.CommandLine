@@ -120,6 +120,29 @@ namespace SabreTools.CommandLine
         public void Add(UserInput input)
             => _inputs.Add(input.Name, input);
 
+        /// <summary>
+        /// Add all children from an input to the set
+        /// </summary>
+        /// <param name="input">UserInput object to retrieve children from</param>
+        /// <remarks>
+        /// This should only be used in situations where an input is defined
+        /// but not used within the context of the command set directly.
+        /// 
+        /// This is helpful for when there are applications with default functionality
+        /// that need to be able to expose both defined features as well as
+        /// the default functionality in help text.
+        /// 
+        /// If there is any overlap between existing names and the names from
+        /// any of the children, this operation will overwrite them.
+        /// </reamrks>
+        public void AddChildrenFrom(UserInput input)
+        {
+            foreach (var kvp in input.Children)
+            {
+                _inputs.Add(kvp.Key, kvp.Value);
+            }
+        }
+
         #endregion
 
         #region Children
