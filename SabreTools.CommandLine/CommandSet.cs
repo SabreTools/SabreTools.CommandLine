@@ -54,6 +54,11 @@ namespace SabreTools.CommandLine
         /// of this feature will be omitted, instead printing
         /// the children of the feature directly at the
         /// top level.
+        /// 
+        /// If the default feature is included as a normal
+        /// top-level input for the command set, then the flags
+        /// will be printed twice - once under the feature
+        /// itself and once at the top level.
         /// </remarks>
         public Feature? DefaultFeature { get; set; }
 
