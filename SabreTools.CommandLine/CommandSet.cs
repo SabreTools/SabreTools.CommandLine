@@ -135,7 +135,7 @@ namespace SabreTools.CommandLine
         /// If there is any overlap between existing names and the names from
         /// any of the children, this operation will overwrite them.
         /// </reamrks>
-        public void AddChildrenFrom(UserInput input)
+        public void AddFrom(UserInput input)
         {
             foreach (var kvp in input.Children)
             {

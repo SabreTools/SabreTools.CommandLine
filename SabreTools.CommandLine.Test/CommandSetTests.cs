@@ -22,7 +22,7 @@ namespace SabreTools.CommandLine.Test
             var featureSet = new CommandSet();
             featureSet.Add(input1);
             featureSet.Add(input2);
-            featureSet.AddChildrenFrom(feature1);
+            featureSet.AddFrom(feature1);
 
             var actualInput1 = featureSet["input1"];
             Assert.NotNull(actualInput1);
