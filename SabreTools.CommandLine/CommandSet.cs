@@ -40,6 +40,20 @@ namespace SabreTools.CommandLine
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Feature that represents the default functionality
+        /// for a command set
+        /// </summary>
+        /// <remarks>
+        /// It is recommended to use this in applications that
+        /// do not need multiple distinct functional modes
+        /// </remarks>
+        public Feature? DefaultFeature { get; set; }
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -762,6 +776,17 @@ namespace SabreTools.CommandLine
                     output.AddRange(outputs);
             }
 
+            // If there is a default feature
+            if (DefaultFeature != null)
+            {
+                foreach (var input in DefaultFeature.Children)
+                {
+                    var outputs = input.Value.Format(pre: 2, midpoint: 30, detailed);
+                    if (outputs != null)
+                        output.AddRange(outputs);
+                }
+            }
+
             // Append the footer, if needed
             if (_footer.Count > 0)
                 output.AddRange(_footer);
@@ -790,6 +815,17 @@ namespace SabreTools.CommandLine
                 var outputs = input.FormatRecursive(pre: 2, midpoint: 30, detailed);
                 if (outputs != null)
                     output.AddRange(outputs);
+            }
+
+            // If there is a default feature
+            if (DefaultFeature != null)
+            {
+                foreach (var input in DefaultFeature.Children)
+                {
+                    var outputs = input.Value.Format(pre: 2, midpoint: 30, detailed);
+                    if (outputs != null)
+                        output.AddRange(outputs);
+                }
             }
 
             // Append the footer, if needed
