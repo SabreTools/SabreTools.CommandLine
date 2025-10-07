@@ -48,7 +48,12 @@ namespace SabreTools.CommandLine
         /// </summary>
         /// <remarks>
         /// It is recommended to use this in applications that
-        /// do not need multiple distinct functional modes
+        /// do not need multiple distinct functional modes.
+        /// 
+        /// When printing help text, the flags and description
+        /// of this feature will be omitted, instead printing
+        /// the children of the feature directly at the
+        /// top level.
         /// </remarks>
         public Feature? DefaultFeature { get; set; }
 
