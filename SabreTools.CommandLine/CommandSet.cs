@@ -43,6 +43,17 @@ namespace SabreTools.CommandLine
         #region Properties
 
         /// <summary>
+        /// Custom help text to print instead of the automatically
+        /// generated generic help
+        /// </summary>
+        /// <remarks>
+        /// This only replaces the automatically generated help
+        /// for <see cref="OutputGenericHelp"/>. It does not impact
+        /// either <see cref="OutputAllHelp"/> or <see cref="OutputFeatureHelp"/>.
+        /// </remarks>
+        public string? CustomHelp { get; set; }
+
+        /// <summary>
         /// Feature that represents the default functionality
         /// for a command set
         /// </summary>
@@ -777,23 +788,33 @@ namespace SabreTools.CommandLine
             if (_header.Count > 0)
                 output.AddRange(_header);
 
-            // Now append all available top-level flags
-            output.Add("Available options:");
-            foreach (var input in _inputs.Values)
+            // If custom help text is defined
+            if (CustomHelp != null)
             {
-                var outputs = input.Format(pre: 2, midpoint: 30, detailed);
-                if (outputs != null)
-                    output.AddRange(outputs);
+                CustomHelp = CustomHelp.Replace("\r\n", "\n");
+                string[] customLines = CustomHelp.Split("\n");
+                output.AddRange(customLines);
             }
-
-            // If there is a default feature
-            if (DefaultFeature != null)
+            else
             {
-                foreach (var input in DefaultFeature.Children)
+                // Append all available top-level flags
+                output.Add("Available options:");
+                foreach (var input in _inputs.Values)
                 {
-                    var outputs = input.Value.Format(pre: 2, midpoint: 30, detailed);
+                    var outputs = input.Format(pre: 2, midpoint: 30, detailed);
                     if (outputs != null)
                         output.AddRange(outputs);
+                }
+
+                // If there is a default feature
+                if (DefaultFeature != null)
+                {
+                    foreach (var input in DefaultFeature.Children)
+                    {
+                        var outputs = input.Value.Format(pre: 2, midpoint: 30, detailed);
+                        if (outputs != null)
+                            output.AddRange(outputs);
+                    }
                 }
             }
 
@@ -818,7 +839,7 @@ namespace SabreTools.CommandLine
             if (_header.Count > 0)
                 output.AddRange(_header);
 
-            // Now append all available flags recursively
+            // Append all available flags recursively
             output.Add("Available options:");
             foreach (var input in _inputs.Values)
             {
