@@ -86,7 +86,7 @@ namespace SabreTools.CommandLine.Inputs
         /// </summary>
         public UserInput? this[UserInput subfeature]
         {
-           get
+            get
             {
                 if (!Children.TryGetValue(subfeature.Name, out var input))
                     return null;

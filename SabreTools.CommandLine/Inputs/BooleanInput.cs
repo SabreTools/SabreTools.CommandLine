@@ -3,7 +3,7 @@ using System.Text;
 namespace SabreTools.CommandLine.Inputs
 {
     /// <summary>
-    /// Represents a user input bounded to the range of <see cref="bool"/> 
+    /// Represents a user input bounded to the range of <see cref="bool"/>
     /// </summary>
     public class BooleanInput : UserInput<bool?>
     {

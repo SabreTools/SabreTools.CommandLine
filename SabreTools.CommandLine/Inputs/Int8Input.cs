@@ -3,7 +3,7 @@ using System.Text;
 namespace SabreTools.CommandLine.Inputs
 {
     /// <summary>
-    /// Represents a user input bounded to the range of <see cref="sbyte"/> 
+    /// Represents a user input bounded to the range of <see cref="sbyte"/>
     /// </summary>
     public class Int8Input : UserInput<sbyte?>
     {

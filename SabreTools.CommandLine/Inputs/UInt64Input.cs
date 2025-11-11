@@ -3,7 +3,7 @@ using System.Text;
 namespace SabreTools.CommandLine.Inputs
 {
     /// <summary>
-    /// Represents a user input bounded to the range of <see cref="ulong"/> 
+    /// Represents a user input bounded to the range of <see cref="ulong"/>
     /// </summary>
     public class UInt64Input : UserInput<ulong?>
     {

@@ -3,7 +3,7 @@ using System.Text;
 namespace SabreTools.CommandLine.Inputs
 {
     /// <summary>
-    /// Represents a user input bounded to the range of <see cref="short"/> 
+    /// Represents a user input bounded to the range of <see cref="short"/>
     /// </summary>
     public class Int16Input : UserInput<short?>
     {

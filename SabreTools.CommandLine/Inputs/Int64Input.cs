@@ -3,7 +3,7 @@ using System.Text;
 namespace SabreTools.CommandLine.Inputs
 {
     /// <summary>
-    /// Represents a user input bounded to the range of <see cref="long"/> 
+    /// Represents a user input bounded to the range of <see cref="long"/>
     /// </summary>
     public class Int64Input : UserInput<long?>
     {

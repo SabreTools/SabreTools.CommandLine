@@ -779,7 +779,7 @@ namespace SabreTools.CommandLine.Test
         [Fact]
         public void ProcessArgs_EmptyArgs_Success()
         {
-            CommandSet commandSet = new CommandSet();
+            var commandSet = new CommandSet();
 
             string[] args = [];
 
@@ -790,7 +790,7 @@ namespace SabreTools.CommandLine.Test
         [Fact]
         public void ProcessArgs_ValidArgs_Success()
         {
-            CommandSet commandSet = new CommandSet();
+            var commandSet = new CommandSet();
             Feature feature = new MockFeature("a", "a", "a");
             feature.Add(new FlagInput("b", "b", "b"));
             feature.Add(new FlagInput("c", "c", "c"));
@@ -806,7 +806,7 @@ namespace SabreTools.CommandLine.Test
         [Fact]
         public void ProcessArgs_InvalidArg_AddedAsGeneric()
         {
-            CommandSet commandSet = new CommandSet();
+            var commandSet = new CommandSet();
             Feature feature = new MockFeature("a", "a", "a");
             feature.Add(new FlagInput("b", "b", "b"));
             feature.Add(new FlagInput("d", "d", "d"));
@@ -823,7 +823,7 @@ namespace SabreTools.CommandLine.Test
         [Fact]
         public void ProcessArgs_NestedArgs_Success()
         {
-            CommandSet commandSet = new CommandSet();
+            var commandSet = new CommandSet();
             Feature feature = new MockFeature("a", "a", "a");
             var sub = new FlagInput("b", "b", "b");
             sub.Add(new FlagInput("c", "c", "c"));

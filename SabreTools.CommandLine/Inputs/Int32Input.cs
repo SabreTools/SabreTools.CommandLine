@@ -3,7 +3,7 @@ using System.Text;
 namespace SabreTools.CommandLine.Inputs
 {
     /// <summary>
-    /// Represents a user input bounded to the range of <see cref="int"/> 
+    /// Represents a user input bounded to the range of <see cref="int"/>
     /// </summary>
     public class Int32Input : UserInput<int?>
     {

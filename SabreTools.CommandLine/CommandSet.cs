@@ -60,12 +60,12 @@ namespace SabreTools.CommandLine
         /// <remarks>
         /// It is recommended to use this in applications that
         /// do not need multiple distinct functional modes.
-        /// 
+        ///
         /// When printing help text, the flags and description
         /// of this feature will be omitted, instead printing
         /// the children of the feature directly at the
         /// top level.
-        /// 
+        ///
         /// If the default feature is included as a normal
         /// top-level input for the command set, then the flags
         /// will be printed twice - once under the feature
@@ -162,11 +162,11 @@ namespace SabreTools.CommandLine
         /// <remarks>
         /// This should only be used in situations where an input is defined
         /// but not used within the context of the command set directly.
-        /// 
+        ///
         /// This is helpful for when there are applications with default functionality
         /// that need to be able to expose both defined features as well as
         /// the default functionality in help text.
-        /// 
+        ///
         /// If there is any overlap between existing names and the names from
         /// any of the children, this operation will overwrite them.
         /// </reamrks>
