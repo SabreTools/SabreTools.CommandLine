@@ -27,10 +27,10 @@ namespace SabreTools.CommandLine.Inputs
         #region Instance Methods
 
         /// <inheritdoc/>
-        public override abstract bool ProcessInput(string[] args, ref int index);
+        public abstract override bool ProcessInput(string[] args, ref int index);
 
         /// <inheritdoc/>
-        protected override abstract string FormatFlags();
+        protected abstract override string FormatFlags();
 
         #endregion
     }

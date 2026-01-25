@@ -46,7 +46,7 @@ namespace SabreTools.CommandLine.Features
             try
             {
                 var assembly = Assembly.GetEntryAssembly();
-                if (assembly == null)
+                if (assembly is null)
                     return null;
 
                 var assemblyVersion = Attribute.GetCustomAttribute(assembly, typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;

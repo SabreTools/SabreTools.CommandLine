@@ -789,7 +789,7 @@ namespace SabreTools.CommandLine
                 output.AddRange(_header);
 
             // If custom help text is defined
-            if (CustomHelp != null)
+            if (CustomHelp is not null)
             {
                 string customHelp = CustomHelp.Replace("\r\n", "\n");
                 string[] customLines = customHelp.Split('\n');
@@ -802,17 +802,17 @@ namespace SabreTools.CommandLine
                 foreach (var input in _inputs.Values)
                 {
                     var outputs = input.Format(pre: 2, midpoint: 30, detailed);
-                    if (outputs != null)
+                    if (outputs is not null)
                         output.AddRange(outputs);
                 }
 
                 // If there is a default feature
-                if (DefaultFeature != null)
+                if (DefaultFeature is not null)
                 {
                     foreach (var input in DefaultFeature.Children)
                     {
                         var outputs = input.Value.Format(pre: 2, midpoint: 30, detailed);
-                        if (outputs != null)
+                        if (outputs is not null)
                             output.AddRange(outputs);
                     }
                 }
@@ -844,17 +844,17 @@ namespace SabreTools.CommandLine
             foreach (var input in _inputs.Values)
             {
                 var outputs = input.FormatRecursive(pre: 2, midpoint: 30, detailed);
-                if (outputs != null)
+                if (outputs is not null)
                     output.AddRange(outputs);
             }
 
             // If there is a default feature
-            if (DefaultFeature != null)
+            if (DefaultFeature is not null)
             {
                 foreach (var input in DefaultFeature.Children)
                 {
                     var outputs = input.Value.Format(pre: 2, midpoint: 30, detailed);
-                    if (outputs != null)
+                    if (outputs is not null)
                         output.AddRange(outputs);
                 }
             }
@@ -990,7 +990,7 @@ namespace SabreTools.CommandLine
 
             // Get the associated feature
             var topLevel = GetTopLevel(featureName);
-            if (topLevel == null || topLevel is not Feature feature)
+            if (topLevel is null || topLevel is not Feature feature)
             {
                 Console.WriteLine($"'{featureName}' is not valid feature flag");
                 OutputFeatureHelp(featureName);
