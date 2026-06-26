@@ -718,6 +718,47 @@ namespace SabreTools.CommandLine.Inputs
             => FormatRecursive(tabLevel: 0, pre, midpoint, detailed);
 
         /// <summary>
+        /// Create roff man page entries for this input and all of its children
+        /// </summary>
+        /// <param name="includeVerbose">True if the detailed description should be included, false otherwise</param>
+        /// <returns>Roff man page lines for this input and its children</returns>
+        internal List<string> FormatManPage(bool includeVerbose)
+        {
+            List<string> output = [];
+
+            // Use the flags as the tag, falling back to the name when none are formatted
+            string tag = FormatFlags();
+            if (tag.Length == 0)
+                tag = Name;
+
+            // Tagged paragraph: bold flags followed by the description
+            output.Add(".TP");
+            output.Add(".B " + Roff.Escape(tag));
+            output.AddRange(Roff.FormatText(Description));
+
+            // Append the detailed description as an additional paragraph
+            if (includeVerbose && !string.IsNullOrEmpty(DetailedDescription))
+            {
+                output.Add(".sp");
+                output.AddRange(Roff.FormatText(DetailedDescription));
+            }
+
+            // Indent and append all children recursively
+            if (Children.Count > 0)
+            {
+                output.Add(".RS");
+                foreach (var child in Children.Values)
+                {
+                    output.AddRange(child.FormatManPage(includeVerbose));
+                }
+
+                output.Add(".RE");
+            }
+
+            return output;
+        }
+
+        /// <summary>
         /// Pre-format the flags for output
         /// </summary>
         protected abstract string FormatFlags();
