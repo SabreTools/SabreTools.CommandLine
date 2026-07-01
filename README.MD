@@ -65,6 +65,7 @@ Three reference feature implementations are included in the `SabreTools.CommandL
 | --- | --- |
 | `Help` | Outputs either a generic help text or one specific to a feature name included as the second argument |
 | `HelpExtended` | Outputs either a generic help text with extended descriptions or one specific to a feature name included as the second argument |
+| `Manpage` | Outputs a roff-formatted manpage based on the current command set |
 | `Version` | Outputs the version number of the program, derived from the informational version |
 
 ## Releases
