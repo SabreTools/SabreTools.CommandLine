@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using SabreTools.CommandLine.Features;
 using SabreTools.CommandLine.Inputs;
 
@@ -963,6 +964,119 @@ namespace SabreTools.CommandLine
 
         #endregion
 
+        #region Manpage Output
+
+        /// <summary>
+        /// Generate a man page from the current set of inputs
+        /// </summary>
+        /// <param name="info">Document-level metadata for the man page</param>
+        /// <param name="includeVerbose">True if detailed descriptions should be included, false otherwise</param>
+        /// <returns>The complete man page as a roff-formatted string</returns>
+        /// <remarks>
+        /// The output uses only the portable man(7) macro set so that it
+        /// renders without warnings under both groff and mandoc. The page
+        /// content is derived from the same model used to format help text,
+        /// so it stays in sync with the output of the help features.
+        /// </remarks>
+        public string OutputManpage(ManpageInfo info, bool includeVerbose = false)
+        {
+            // Start building the output list
+            List<string> output = [];
+
+            // Leading comment and title line
+            output.Add(".\\\" Generated from the command-line model. Do not edit by hand.");
+            output.Add(BuildTitleHeader(info));
+
+            // Name section
+            output.Add(".SH NAME");
+            string nameLine = Roff.Escape(info.Name);
+            if (!string.IsNullOrEmpty(info.Description))
+                nameLine += " \\- " + Roff.Escape(info.Description);
+            output.Add(nameLine);
+
+            // Synopsis section
+            output.Add(".SH SYNOPSIS");
+            output.Add(".B " + Roff.Escape(info.Name));
+            output.Add("[options]");
+
+            // Description section, derived from the header lines
+            if (_header.Count > 0)
+            {
+                output.Add(".SH DESCRIPTION");
+                foreach (string line in _header)
+                {
+                    output.AddRange(Roff.FormatText(line));
+                }
+            }
+
+            // Options section, derived from all available inputs
+            output.Add(".SH " + info.OptionsHeading);
+            foreach (var input in _inputs.Values)
+            {
+                output.AddRange(input.FormatManpage(includeVerbose));
+            }
+
+            // If there is a default feature, include its children directly
+            if (DefaultFeature is not null)
+            {
+                foreach (var input in DefaultFeature.Children.Values)
+                {
+                    output.AddRange(input.FormatManpage(includeVerbose));
+                }
+            }
+
+            // Notes section, derived from the footer lines
+            if (_footer.Count > 0)
+            {
+                output.Add(".SH NOTES");
+                foreach (string line in _footer)
+                {
+                    output.AddRange(Roff.FormatText(line));
+                }
+            }
+
+            // Join the lines with a trailing newline for a well-formed file
+            return string.Join("\n", output.ToArray()) + "\n";
+        }
+
+        /// <summary>
+        /// Generate a man page from the current set of inputs and write it to a file
+        /// </summary>
+        /// <param name="path">Path to write the generated man page to</param>
+        /// <param name="info">Document-level metadata for the man page</param>
+        /// <param name="includeVerbose">True if detailed descriptions should be included, false otherwise</param>
+        /// <remarks>The file is written as UTF-8 without a byte order mark</remarks>
+        public void OutputManpage(string path, ManpageInfo info, bool includeVerbose = false)
+        {
+            string content = OutputManpage(info, includeVerbose);
+            File.WriteAllText(path, content);
+        }
+
+        /// <summary>
+        /// Build the roff <c>.TH</c> title line from the page metadata
+        /// </summary>
+        /// <param name="info">Document-level metadata for the man page</param>
+        /// <returns>The formatted title line</returns>
+        private static string BuildTitleHeader(ManpageInfo info)
+        {
+            return ".TH "
+                + Quote(info.Name.ToUpperInvariant())
+                + " " + Quote(info.Section)
+                + " " + Quote(info.Date)
+                + " " + Quote(info.Version)
+                + " " + Quote(info.Title);
+        }
+
+        /// <summary>
+        /// Wrap an escaped value in double quotes for a <c>.TH</c> field
+        /// </summary>
+        /// <param name="value">Value to quote, if any</param>
+        /// <returns>The escaped, quoted value</returns>
+        private static string Quote(string? value)
+            => "\"" + Roff.EscapeField(value) + "\"";
+
+        #endregion
+
         #region Processing
 
         /// <summary>
@@ -1006,6 +1120,11 @@ namespace SabreTools.CommandLine
             else if (topLevel is HelpExtended helpExtFeature)
             {
                 helpExtFeature.ProcessArgs(args, 0, this);
+                return true;
+            }
+            else if (topLevel is Manpage manFeature)
+            {
+                manFeature.ProcessArgs(args, 0, this);
                 return true;
             }
 
