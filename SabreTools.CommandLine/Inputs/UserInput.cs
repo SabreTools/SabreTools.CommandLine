@@ -722,7 +722,7 @@ namespace SabreTools.CommandLine.Inputs
         /// </summary>
         /// <param name="includeVerbose">True if the detailed description should be included, false otherwise</param>
         /// <returns>Roff man page lines for this input and its children</returns>
-        internal List<string> FormatManPage(bool includeVerbose)
+        internal List<string> FormatManpage(bool includeVerbose)
         {
             List<string> output = [];
 
@@ -749,7 +749,7 @@ namespace SabreTools.CommandLine.Inputs
                 output.Add(".RS");
                 foreach (var child in Children.Values)
                 {
-                    output.AddRange(child.FormatManPage(includeVerbose));
+                    output.AddRange(child.FormatManpage(includeVerbose));
                 }
 
                 output.Add(".RE");

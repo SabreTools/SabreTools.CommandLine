@@ -964,7 +964,7 @@ namespace SabreTools.CommandLine
 
         #endregion
 
-        #region Man Page Output
+        #region Manpage Output
 
         /// <summary>
         /// Generate a man page from the current set of inputs
@@ -978,11 +978,8 @@ namespace SabreTools.CommandLine
         /// content is derived from the same model used to format help text,
         /// so it stays in sync with the output of the help features.
         /// </remarks>
-        public string OutputManPage(ManPageInfo info, bool includeVerbose = false)
+        public string OutputManpage(ManpageInfo info, bool includeVerbose = false)
         {
-            if (info is null)
-                throw new ArgumentNullException(nameof(info));
-
             // Start building the output list
             List<string> output = [];
 
@@ -1016,7 +1013,7 @@ namespace SabreTools.CommandLine
             output.Add(".SH " + info.OptionsHeading);
             foreach (var input in _inputs.Values)
             {
-                output.AddRange(input.FormatManPage(includeVerbose));
+                output.AddRange(input.FormatManpage(includeVerbose));
             }
 
             // If there is a default feature, include its children directly
@@ -1024,7 +1021,7 @@ namespace SabreTools.CommandLine
             {
                 foreach (var input in DefaultFeature.Children.Values)
                 {
-                    output.AddRange(input.FormatManPage(includeVerbose));
+                    output.AddRange(input.FormatManpage(includeVerbose));
                 }
             }
 
@@ -1049,9 +1046,9 @@ namespace SabreTools.CommandLine
         /// <param name="info">Document-level metadata for the man page</param>
         /// <param name="includeVerbose">True if detailed descriptions should be included, false otherwise</param>
         /// <remarks>The file is written as UTF-8 without a byte order mark</remarks>
-        public void OutputManPage(string path, ManPageInfo info, bool includeVerbose = false)
+        public void OutputManpage(string path, ManpageInfo info, bool includeVerbose = false)
         {
-            string content = OutputManPage(info, includeVerbose);
+            string content = OutputManpage(info, includeVerbose);
             File.WriteAllText(path, content);
         }
 
@@ -1060,7 +1057,7 @@ namespace SabreTools.CommandLine
         /// </summary>
         /// <param name="info">Document-level metadata for the man page</param>
         /// <returns>The formatted title line</returns>
-        private static string BuildTitleHeader(ManPageInfo info)
+        private static string BuildTitleHeader(ManpageInfo info)
         {
             return ".TH "
                 + Quote(info.Name.ToUpperInvariant())
@@ -1125,7 +1122,7 @@ namespace SabreTools.CommandLine
                 helpExtFeature.ProcessArgs(args, 0, this);
                 return true;
             }
-            else if (topLevel is ManPage manFeature)
+            else if (topLevel is Manpage manFeature)
             {
                 manFeature.ProcessArgs(args, 0, this);
                 return true;

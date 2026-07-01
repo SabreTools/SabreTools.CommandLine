@@ -8,7 +8,7 @@
     /// derived from the command-line model itself, such as the
     /// <c>.TH</c> title line and the <c>NAME</c> section.
     /// </remarks>
-    public class ManPageInfo
+    public class ManpageInfo
     {
         /// <summary>
         /// Program name as invoked on the command line
@@ -58,10 +58,10 @@
         public string OptionsHeading { get; set; } = "OPTIONS";
 
         /// <summary>
-        /// Create a new <see cref="ManPageInfo"/> for the given program name
+        /// Create a new <see cref="ManpageInfo"/> for the given program name
         /// </summary>
         /// <param name="name">Program name as invoked on the command line</param>
-        public ManPageInfo(string name)
+        public ManpageInfo(string name)
         {
             Name = name;
         }

@@ -10,11 +10,11 @@ namespace SabreTools.CommandLine.Features
     /// the enclosing <see cref="CommandSet"/> so that it can render the page
     /// from the same model used to format help text. The roff output is
     /// written to standard output so that it can be redirected to a file at
-    /// packaging time, for example <c>tool help-man &gt; tool.1</c>.
+    /// packaging time, for example <c>tool man &gt; tool.1</c>.
     /// </remarks>
-    public class ManPage : Feature
+    public class Manpage : Feature
     {
-        public const string DisplayName = "Man Page";
+        public const string DisplayName = "Manpage";
 
         private static readonly string[] _defaultFlags = ["man"];
 
@@ -25,14 +25,14 @@ namespace SabreTools.CommandLine.Features
         /// <summary>
         /// Document-level metadata for the generated man page
         /// </summary>
-        private readonly ManPageInfo _info;
+        private readonly ManpageInfo _info;
 
         /// <summary>
         /// Indicates if detailed descriptions should be included
         /// </summary>
         private readonly bool _includeVerbose;
 
-        public ManPage(ManPageInfo info, bool includeVerbose = true)
+        public Manpage(ManpageInfo info, bool includeVerbose = true)
             : base(DisplayName, _defaultFlags, _description, _detailedDescription)
         {
             _info = info;
@@ -40,7 +40,7 @@ namespace SabreTools.CommandLine.Features
             RequiresInputs = false;
         }
 
-        public ManPage(ManPageInfo info, string[] flags, bool includeVerbose = true)
+        public Manpage(ManpageInfo info, string[] flags, bool includeVerbose = true)
             : base(DisplayName, flags, _description, _detailedDescription)
         {
             _info = info;
@@ -58,7 +58,7 @@ namespace SabreTools.CommandLine.Features
         {
             // The page can only be rendered with the enclosing set
             if (parentSet is not null)
-                Console.Write(parentSet.OutputManPage(_info, _includeVerbose));
+                Console.Write(parentSet.OutputManpage(_info, _includeVerbose));
 
             return true;
         }
