@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SabreTools.CommandLine
+namespace SabreTools.CommandLine.Tools
 {
     /// <summary>
     /// Helpers for emitting roff-formatted man page text
@@ -55,7 +55,8 @@ namespace SabreTools.CommandLine
             if (string.IsNullOrEmpty(value))
                 return string.Empty;
 
-            return value!.Replace("\\", "\\e").Replace("\"", "\\(dq");
+            return value!.Replace("\\", "\\e")
+                .Replace("\"", "\\(dq");
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace SabreTools.CommandLine
 
             // Normalize line endings and split into paragraphs on blank lines
             string normalized = text!.Replace("\r\n", "\n").Replace("\r", "\n");
-            string[] paragraphs = normalized.Split(new string[] { "\n\n" }, StringSplitOptions.None);
+            string[] paragraphs = normalized.Split(["\n\n"], StringSplitOptions.None);
 
             for (int i = 0; i < paragraphs.Length; i++)
             {
@@ -84,7 +85,8 @@ namespace SabreTools.CommandLine
                 if (output.Count > 0)
                     output.Add(".sp");
 
-                output.AddRange(WrapParagraph(paragraph));
+                List<string> wrapped = WrapParagraph(paragraph);
+                output.AddRange(wrapped);
             }
 
             return output;
@@ -100,32 +102,32 @@ namespace SabreTools.CommandLine
             List<string> lines = [];
             string[] words = paragraph.Split(' ');
 
-            var current = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i < words.Length; i++)
             {
                 string word = Escape(words[i]);
                 if (word.Length == 0)
                     continue;
 
-                if (current.Length == 0)
+                if (sb.Length == 0)
                 {
-                    current.Append(word);
+                    sb.Append(word);
                 }
-                else if (current.Length + 1 + word.Length <= LineWidth)
+                else if (sb.Length + 1 + word.Length <= LineWidth)
                 {
-                    current.Append(' ');
-                    current.Append(word);
+                    sb.Append(' ');
+                    sb.Append(word);
                 }
                 else
                 {
-                    lines.Add(Protect(current.ToString()));
-                    current = new StringBuilder();
-                    current.Append(word);
+                    lines.Add(Protect(sb.ToString()));
+                    sb = new StringBuilder();
+                    sb.Append(word);
                 }
             }
 
-            if (current.Length > 0)
-                lines.Add(Protect(current.ToString()));
+            if (sb.Length > 0)
+                lines.Add(Protect(sb.ToString()));
 
             return lines;
         }
@@ -140,7 +142,7 @@ namespace SabreTools.CommandLine
             // A line beginning with a control character would be treated as a
             // request; a leading zero-width escape forces it to be text
             if (line.Length > 0 && (line[0] == '.' || line[0] == '\''))
-                return "\\&" + line;
+                return $"\\&{line}";
 
             return line;
         }

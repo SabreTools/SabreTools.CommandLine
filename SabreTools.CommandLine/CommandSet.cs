@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using SabreTools.CommandLine.Features;
 using SabreTools.CommandLine.Inputs;
+using SabreTools.CommandLine.Tools;
 
 namespace SabreTools.CommandLine
 {
@@ -991,12 +992,13 @@ namespace SabreTools.CommandLine
             output.Add(".SH NAME");
             string nameLine = Roff.Escape(info.Name);
             if (!string.IsNullOrEmpty(info.Description))
-                nameLine += " \\- " + Roff.Escape(info.Description);
+                nameLine += $" \\- {Roff.Escape(info.Description)}";
+
             output.Add(nameLine);
 
             // Synopsis section
             output.Add(".SH SYNOPSIS");
-            output.Add(".B " + Roff.Escape(info.Name));
+            output.Add(item: $".B {Roff.Escape(info.Name)}");
             output.Add("[options]");
 
             // Description section, derived from the header lines
@@ -1010,7 +1012,7 @@ namespace SabreTools.CommandLine
             }
 
             // Options section, derived from all available inputs
-            output.Add(".SH " + info.OptionsHeading);
+            output.Add($".SH {info.OptionsHeading}");
             foreach (var input in _inputs.Values)
             {
                 output.AddRange(input.FormatManpage(includeVerbose));
@@ -1036,7 +1038,7 @@ namespace SabreTools.CommandLine
             }
 
             // Join the lines with a trailing newline for a well-formed file
-            return string.Join("\n", output.ToArray()) + "\n";
+            return string.Join("\n", [.. output]) + "\n";
         }
 
         /// <summary>
@@ -1073,7 +1075,7 @@ namespace SabreTools.CommandLine
         /// <param name="value">Value to quote, if any</param>
         /// <returns>The escaped, quoted value</returns>
         private static string Quote(string? value)
-            => "\"" + Roff.EscapeField(value) + "\"";
+            => $"\"{Roff.EscapeField(value)}\"";
 
         #endregion
 

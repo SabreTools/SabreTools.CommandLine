@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using SabreTools.CommandLine.Tools;
 
 namespace SabreTools.CommandLine.Inputs
 {
@@ -718,6 +719,11 @@ namespace SabreTools.CommandLine.Inputs
             => FormatRecursive(tabLevel: 0, pre, midpoint, detailed);
 
         /// <summary>
+        /// Pre-format the flags for output
+        /// </summary>
+        protected abstract string FormatFlags();
+
+        /// <summary>
         /// Create roff man page entries for this input and all of its children
         /// </summary>
         /// <param name="includeVerbose">True if the detailed description should be included, false otherwise</param>
@@ -757,20 +763,6 @@ namespace SabreTools.CommandLine.Inputs
 
             return output;
         }
-
-        /// <summary>
-        /// Pre-format the flags for output
-        /// </summary>
-        protected abstract string FormatFlags();
-
-        /// <summary>
-        /// Create a padding space based on the given length
-        /// </summary>
-        /// <param name="spaces">Number of padding spaces to add</param>
-        /// <returns>String with requested number of blank spaces</returns>
-        private static string CreatePadding(int spaces) => spaces > 0
-            ? string.Empty.PadRight(spaces)
-            : string.Empty;
 
         /// <summary>
         /// Format the standard help output line
@@ -879,6 +871,15 @@ namespace SabreTools.CommandLine.Inputs
 
             return outputList;
         }
+
+        /// <summary>
+        /// Create a padding space based on the given length
+        /// </summary>
+        /// <param name="spaces">Number of padding spaces to add</param>
+        /// <returns>String with requested number of blank spaces</returns>
+        private static string CreatePadding(int spaces) => spaces > 0
+            ? string.Empty.PadRight(spaces)
+            : string.Empty;
 
         /// <summary>
         /// Create formatted help text including all children

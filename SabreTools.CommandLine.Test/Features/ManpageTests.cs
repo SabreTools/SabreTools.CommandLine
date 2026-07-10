@@ -17,7 +17,6 @@ namespace SabreTools.CommandLine.Test.Features
 
             var original = Console.Out;
             var writer = new StringWriter();
-            string output;
             try
             {
                 Console.SetOut(writer);
@@ -29,10 +28,10 @@ namespace SabreTools.CommandLine.Test.Features
                 Console.SetOut(original);
             }
 
-            output = writer.ToString();
-            Assert.Contains(".TH \"SAMPLE\" \"1\"", output);
-            Assert.Contains(".SH NAME", output);
-            Assert.Contains(".B \\-\\-convert", output);
+            string actual = writer.ToString();
+            Assert.Contains(".TH \"SAMPLE\" \"1\"", actual);
+            Assert.Contains(".SH NAME", actual);
+            Assert.Contains(".B \\-\\-convert", actual);
         }
 
         /// <summary>
@@ -42,11 +41,15 @@ namespace SabreTools.CommandLine.Test.Features
         {
             var set = new CommandSet("Sample header line");
 
-            var help = new MockFeature("Help", ["?", "h", "help"], "Show this help",
+            var help = new MockFeature("Help",
+                ["?", "h", "help"],
+                "Show this help",
                 "Built-in to most of the programs is a basic help text.");
             set.Add(help);
 
-            var convert = new MockFeature("Convert", "--convert", "Convert input files",
+            var convert = new MockFeature("Convert",
+                "--convert",
+                "Convert input files",
                 "Converts the provided input files into the desired output format.");
             convert.Add(new StringInput("output", "--output", "Set the output path"));
             convert.Add(new FlagInput("force", "--force", "Overwrite existing files"));

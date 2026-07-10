@@ -846,7 +846,11 @@ namespace SabreTools.CommandLine.Test
         public void OutputManpage_Structure_ContainsRequiredSections()
         {
             var set = BuildSampleSet();
-            var info = new ManpageInfo("sample") { Version = "sample 1.0", Description = "do sample things" };
+            var info = new ManpageInfo("sample")
+            {
+                Version = "sample 1.0",
+                Description = "do sample things",
+            };
 
             string page = set.OutputManpage(info);
 
@@ -965,11 +969,15 @@ namespace SabreTools.CommandLine.Test
         {
             var set = new CommandSet("Sample header line");
 
-            var help = new MockFeature("Help", ["?", "h", "help"], "Show this help",
+            var help = new MockFeature("Help",
+                ["?", "h", "help"],
+                "Show this help",
                 "Built-in to most of the programs is a basic help text.");
             set.Add(help);
 
-            var convert = new MockFeature("Convert", "--convert", "Convert input files",
+            var convert = new MockFeature("Convert",
+                "--convert",
+                "Convert input files",
                 "Converts the provided input files into the desired output format.");
             convert.Add(new StringInput("output", "--output", "Set the output path"));
             convert.Add(new FlagInput("force", "--force", "Overwrite existing files"));
